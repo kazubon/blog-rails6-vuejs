@@ -1,0 +1,16 @@
+<div class="col-sm-6 mx-auto">
+<h1>ログイン</h1>
+
+<%= form_for @form, as: :user, url: :session do |f| %>
+  <div class="form-group">
+    <%= f.label :email, "メールアドレス" %>
+    <%= f.email_field :email, class: "form-control", required: true %>
+  </div>
+  <div class="form-group mb-5">
+    <%= f.label :password, "パスワード" %>
+    <%= f.password_field :password, class: "form-control", required: true %>
+  </div>
+  <button type="submit" class="btn btn-outline-primary">ログイン</button>
+<% end %>
+
+</div>
