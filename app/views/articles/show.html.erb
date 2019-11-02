@@ -1,0 +1,16 @@
+<h1>
+<%= '[下書き]' if @article.draft? %>
+<%= @article.title %>
+</h1>
+
+<p class="text-right text-secondary">
+<%= @article.user.name %>
+| <%= @article.published_at.strftime('%Y-%m-%d %H:%M') %>
+<% if @article.editable_by?(current_user) %>
+| <%= link_to '編集', [:edit, @article] %>
+<% end %>
+</p>
+
+<p>
+<%= h(@article.body).gsub(/\n/, '<br>').html_safe %>
+</p>

@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  class NotFound < StandardError; end
 
   private
   def require_login

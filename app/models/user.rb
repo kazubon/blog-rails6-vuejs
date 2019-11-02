@@ -1,4 +1,8 @@
 class User < ApplicationRecord
+  has_many :articles
+
+  scope :active, ->{ where.not(deleted_at: nil) }
+
   attr_accessor :password
 
   def password=(password)
@@ -16,7 +20,7 @@ class User < ApplicationRecord
     end
 
     def authenticate(email, password)
-      user = search_by_email(email).first
+      user = active.search_by_email(email).first
       if user && user.valid_password?(password)
         user
       end

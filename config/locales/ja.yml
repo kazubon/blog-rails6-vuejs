@@ -1,0 +1,6 @@
+ja:
+  activemodel:
+    attributes:
+      article_form:
+        title: タイトル
+        body: 本文

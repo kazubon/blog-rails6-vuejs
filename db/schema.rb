@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 2019_10_31_053328) do
     t.string "email", null: false
     t.string "name", null: false
     t.string "hashed_password", null: false
+    t.boolean "deleted_at", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_users_on_email"
