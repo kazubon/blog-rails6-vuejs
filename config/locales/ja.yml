@@ -4,3 +4,4 @@ ja:
       article_form:
         title: タイトル
         body: 本文
+        tags: タグ

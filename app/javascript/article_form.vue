@@ -19,6 +19,14 @@
         </textarea>
       </div>
       <div class="form-group">
+        <label for="article-tag0">タグ</label>
+        <div>
+          <input v-for="(tag, index) in article.tags" :key="index" v-model="tag.name"
+            class="form-control width-auto d-inline-block mr-2" style="width: 17%"
+            maxlength="255" >
+        </div>
+      </div>
+      <div class="form-group">
         <label for="article-published_at">日時</label>
         <input type="text" v-model="article.published_at" id="article-published_at"
           class="form-control"
@@ -34,7 +42,7 @@
 </template>
 
 <script>
-const axios = require('axios');
+import axios from 'axios';
 
 export default {
   data: function () {
@@ -50,9 +58,10 @@ export default {
     axios.get(location.href, {
       headers: { 'Accept' : 'application/json' }
     }).then((res) => {
-      this.article = res.data.article
-      this.httpMethod = res.data.http_method
-      this.path = res.data.path
+      this.article = res.data.article;
+      this.httpMethod = res.data.http_method;
+      this.path = res.data.path;
+      this.initTags();
     });
   },
   methods: {
@@ -78,6 +87,14 @@ export default {
         }
         window.scrollTo(0, 0);
       });
+    },
+    initTags() {
+      let len = this.article.tags.length;
+      if(len < 5) {
+        for(let i = 0; i < 5 - len; i++) {
+          this.article.tags.push({ name: '' });
+        }
+      }
     }
   }
 }
