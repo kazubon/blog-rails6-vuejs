@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
     @form = LoginForm.new(login_params)
     if @form.authenticate
       session[:user_id] = @form.user.id
-      redirect_to :root
+      redirect_to [@form.user, :articles]
     else
       flash.now.alert = "メールアドレスまたはパスワードが一致しません。"
       render :new

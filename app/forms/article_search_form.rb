@@ -19,6 +19,15 @@ class ArticleSearchForm
     else
       Article.published
     end
-    rel.preload(:user).order(published_at: :desc)
+
+    if title.present?
+      rel = rel.where('title LIKE ?', '%' + title + '%')
+    end
+    if tag_name.present?
+      rel = rel.joins(:tags).
+        where('LOWER(tags.name) = LOWER(?)', tag_name)
+    end
+
+    rel.preload(:user).preload(:tags).order(published_at: :desc)
   end
 end
