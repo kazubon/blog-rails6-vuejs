@@ -3,8 +3,11 @@ require("turbolinks").start();
 // require("@rails/activestorage").start();
 
 import Vue from 'vue';
+import TurbolinksAdapter from 'vue-turbolinks'
 import ArticleSearch from '../article_search.vue';
 import ArticleForm from '../article_form.vue';
+
+Vue.use(TurbolinksAdapter);
 
 document.addEventListener('turbolinks:load', () => {
   let parts = [
