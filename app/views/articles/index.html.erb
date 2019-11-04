@@ -1,0 +1,14 @@
+<% if @user %>
+<div class="row">
+  <div class="col-md">
+    <h1><%= @user.name %> さんの記事</h1>
+  </div>
+  <% if @user == current_user %>
+    <div class="col-md text-right">
+      <%= link_to '新規作成', :new_article %>
+    </div>
+  <% end %>
+</div>
+<% end %>
+
+<div id="article-search"></div>

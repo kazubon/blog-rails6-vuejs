@@ -1,7 +1,17 @@
 class ArticlesController < ApplicationController
-  before_action :require_login, except: [:show]
+  before_action :require_login, except: %i(index show)
 
   def index
+    if params[:user_id].present?
+      @user = User.active.find(params[:user_id])
+    end
+    respond_to do |format|
+      format.html
+      format.json {
+        form = ArticleSearchForm.new(current_user, @user, search_params)
+        @articles = form.search
+      }
+    end
   end
 
   def show
@@ -56,8 +66,15 @@ class ArticlesController < ApplicationController
   end
 
   private
+  def search_params
+    return {} unless params[:a]
+    params.require(:a).permit(
+      :title, :tag_name, :tag_id
+    )
+  end
+
   def article_params
-    params.require('article').permit(
+    params.require(:article).permit(
       :title, :body, :published_at, :draft, tags: [ :name ]
     )
   end

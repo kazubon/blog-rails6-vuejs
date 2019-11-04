@@ -1,20 +1,21 @@
-User.find_or_create_by!(email: 'alice@example.com') do |u|
-  u.assign_attributes(
-    name: 'Alice',
-    password: 'password'
-  )
-end
+Tagging.delete_all
+Article.delete_all
+User.delete_all
 
-User.find_or_create_by!(email: 'bob@example.com') do |u|
-  u.assign_attributes(
-    name: 'Bob',
-    password: 'password'
-  )
-end
+User.create!(
+  email: 'alice@example.com',
+  name: 'Alice',
+  password: 'password'
+)
 
-User.find_or_create_by!(email: 'carol@example.com') do |u|
-  u.assign_attributes(
-    name: 'Carol',
-    password: 'password'
-  )
-end
+User.create!(
+  email: 'bob@example.com',
+  name: 'Bob',
+  password: 'password'
+)
+
+User.create!(
+  email: 'carol@example.com',
+  name: 'Carol',
+  password: 'password'
+)

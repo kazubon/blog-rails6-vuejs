@@ -1,10 +1,10 @@
 <h1>
-<%= '[下書き]' if @article.draft? %>
+<%= '(下書き)' if @article.draft? %>
 <%= @article.title %>
 </h1>
 
 <p class="text-right text-secondary">
-<%= @article.user.name %>
+<%= link_to @article.user.name, [@article.user, :articles] %>
 | <%= @article.published_at.strftime('%Y-%m-%d %H:%M') %>
 <% if @article.editable_by?(current_user) %>
 | <%= link_to '編集', [:edit, @article] %>
