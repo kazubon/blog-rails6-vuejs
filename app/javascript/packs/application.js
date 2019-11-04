@@ -17,6 +17,7 @@ document.addEventListener('turbolinks:load', () => {
 
   parts.forEach((part) => {
     if($(part.elem).length) {
+      part.object.options = $(part.elem).data();
       new Vue(part.object).$mount(part.elem);
     }
   });

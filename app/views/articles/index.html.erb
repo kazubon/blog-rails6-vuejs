@@ -11,4 +11,4 @@
 </div>
 <% end %>
 
-<div id="article-search"></div>
+<%= content_tag :div, '', id: "article-search", data: { user_id: @user.try(:id) } %>

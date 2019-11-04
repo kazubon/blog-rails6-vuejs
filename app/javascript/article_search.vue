@@ -1,11 +1,12 @@
 <template>
   <div>
-    <form :action="searchPath" method="get" class="form-inline mb-4">
-      <input type="text" name="a[title]" class="form-control mr-3 mb-2"
+    <form action="/articles" method="get" class="form-inline mb-4">
+      <input type="text" name="q[title]" class="form-control mr-3 mb-2"
         v-model="params.title" placeholder="タイトル">
-      <input type="text" name="a[tag_name]" class="form-control mr-3 mb-2"
+      <input type="text" name="q[tag_name]" class="form-control mr-3 mb-2"
         v-model="params.tag_name" placeholder="タグ">
       <button type="submit" class="btn btn-outline-primary mb-2">検索</button>
+      <input type="hidden" name="user_id" v-model="userId" />
     </form>
     <div class="articles mb-4">
       <div class="text-right mb-3">{{articlesCount}}件の記事</div>
@@ -34,33 +35,34 @@ export default {
       params: {},
       articles: [],
       articlesCount: 0,
-      offset: 0
+      offset: 0,
+      userId: null
     };
   },
   computed: {
-    searchPath() {
-      let path = location.pathname;
-      return (path == '/' ? '/articles' : path.replace(/(\.html$)/, ''));
-    },
     showMore() {
       return (this.articles.length < this.articlesCount);
     }
   },
   created () {
+    this.userId = this.$options.options.userId;
     let params = qs.parse(location.search.slice(1));
-    this.params = params.a || {};
+    this.params = params.q || {};
     this.getArticles();
   },
   methods: {
     getArticles() {
-      let params = { a: this.params };
-      if(this.offset > 0) {
-        params.a.offset = this.offset
+      let params = {
+        q: this.params,
+        user_id: this.userId
       };
-      let path = this.searchPath + '.json?' +
+      if(this.offset > 0) {
+        params.q.offset = this.offset;
+      };
+      let path = '/articles.json?' +
         qs.stringify(params, { arrayFormat: 'brackets'});
       axios.get(path).then((res) => {
-        res.data.articles.forEach(a => this.articles.push(a));
+        this.articles = this.articles.concat(res.data.articles);
         this.articlesCount = res.data.articles_count;
       });
     },

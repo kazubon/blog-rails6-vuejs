@@ -22,7 +22,7 @@ class ArticlesController < ApplicationController
     @article = Article.new
     respond_to do |format|
       format.html
-      format.json { render :edit }
+      format.json { render :show }
     end
   end
 
@@ -30,7 +30,7 @@ class ArticlesController < ApplicationController
     @article = current_user.articles.find(params[:id])
     respond_to do |format|
       format.html
-      format.json
+      format.json { render :show }
     end
   end
 
@@ -66,8 +66,8 @@ class ArticlesController < ApplicationController
 
   private
   def search_params
-    return {} unless params[:a]
-    params.require(:a).permit(
+    return {} unless params[:q]
+    params.require(:q).permit(
       :title, :tag_name, :tag_id, :offset
     )
   end

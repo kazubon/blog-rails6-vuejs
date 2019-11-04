@@ -43,33 +43,39 @@
 
 <script>
 import axios from 'axios';
+import moment from 'moment';
 
 export default {
   data: function () {
     return {
-      article: {},
-      httpMethod: 'post',
-      path: '/articles',
+      article: {
+        title: null, body: null, draft: false,
+        published_at: moment().format('YYYY-MM-DD HH:mm'),
+        tags: []
+      },
+      articleId: null,
       alert: null,
       errorMessages: []
     };
   },
   created () {
-    axios.get(location.href, {
-      headers: { 'Accept' : 'application/json' }
-    }).then((res) => {
-      this.article = res.data.article;
-      this.httpMethod = res.data.http_method;
-      this.path = res.data.path;
+    this.articleId = this.$options.options.articleId;
+    if(this.articleId) {
+      axios.get(`/articles/${this.articleId}.json`).then((res) => {
+        this.article = res.data.article;
+        this.initTags();
+      });
+    }
+    else {
       this.initTags();
-    });
+    }
   },
   methods: {
     submit(evt) {
       evt.preventDefault();
       axios({
-        method: this.httpMethod,
-        url: this.path,
+        method: (this.articleId ? 'patch' : 'post'),
+        url: (this.articleId ? `/articles/${this.articleId}.json` : '/articles.json'),
         headers: { 'Content-type' : 'application/json; charset=utf-8' },
         data: {
           article: this.article,

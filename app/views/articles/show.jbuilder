@@ -9,5 +9,3 @@ json.article do
     end
   end
 end
-json.http_method @article.new_record? ? 'post' : 'patch'
-json.path @article.new_record? ? articles_path : article_path(@article)
