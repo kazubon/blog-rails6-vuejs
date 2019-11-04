@@ -1,5 +1,5 @@
 json.articles do
-  json.array! @articles do |article|
+  json.array! @form.articles do |article|
     json.id article.id
     json.title article.title
     json.path article_path(article)
@@ -14,3 +14,4 @@ json.articles do
     end
   end
 end
+json.articles_count @form.articles_count

@@ -8,8 +8,7 @@ class ArticlesController < ApplicationController
     respond_to do |format|
       format.html
       format.json {
-        form = ArticleSearchForm.new(current_user, @user, search_params)
-        @articles = form.search
+        @form = ArticleSearchForm.new(current_user, @user, search_params)
       }
     end
   end
@@ -69,7 +68,7 @@ class ArticlesController < ApplicationController
   def search_params
     return {} unless params[:a]
     params.require(:a).permit(
-      :title, :tag_name, :tag_id
+      :title, :tag_name, :tag_id, :offset
     )
   end
 

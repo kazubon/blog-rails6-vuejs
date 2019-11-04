@@ -5,6 +5,7 @@ class ArticleSearchForm
   attribute :title, :string
   attribute :tag_name, :string
   attribute :tag_id, :integer
+  attribute :offset, :integer
   attr_accessor :current_user, :user
 
   def initialize(current_user, user, params = {})
@@ -13,7 +14,20 @@ class ArticleSearchForm
     super(params)
   end
 
-  def search
+  def articles
+    rel = relation
+    if offset.present?
+      rel = rel.offset(offset)
+    end
+    rel.preload(:user).preload(:tags).order(published_at: :desc).limit(20)
+  end
+
+  def articles_count
+    relation.count
+  end
+
+  private
+  def relation
     rel = if user
       user == current_user ? user.articles : user.articles.published
     else
@@ -28,6 +42,6 @@ class ArticleSearchForm
         where('LOWER(tags.name) = LOWER(?)', tag_name)
     end
 
-    rel.preload(:user).preload(:tags).order(published_at: :desc)
+    rel
   end
 end
