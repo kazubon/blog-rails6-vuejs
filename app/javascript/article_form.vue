@@ -46,6 +46,7 @@ import axios from 'axios';
 import moment from 'moment';
 
 export default {
+  props: ['railsData'], 
   data: function () {
     return {
       article: {
@@ -59,7 +60,7 @@ export default {
     };
   },
   created () {
-    this.articleId = this.$options.options.articleId;
+    this.articleId = this.railsData.articleId;
     if(this.articleId) {
       axios.get(`/articles/${this.articleId}.json`).then((res) => {
         this.article = res.data.article;

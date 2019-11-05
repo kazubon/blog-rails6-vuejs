@@ -2,13 +2,14 @@ class ArticlesController < ApplicationController
   before_action :require_login, except: %i(index show)
 
   def index
-    if params[:user_id].present?
-      @user = User.active.find(params[:user_id])
-    end
     respond_to do |format|
-      format.html
+      format.html {
+        user_id = params[:user_id] || search_params[:user_id]
+        @user = User.active.find(user_id) if user_id.present?
+        @tag = Tag.find(params[:tag_id]) if params[:tag_id].present?
+      }
       format.json {
-        @form = ArticleSearchForm.new(current_user, @user, search_params)
+        @form = ArticleSearchForm.new(current_user, search_params)
       }
     end
   end
@@ -66,9 +67,9 @@ class ArticlesController < ApplicationController
 
   private
   def search_params
-    return {} unless params[:q]
+    return {} unless params.has_key?(:q)
     params.require(:q).permit(
-      :title, :tag_name, :tag_id, :offset
+      :title, :tag, :user_id, :offset
     )
   end
 

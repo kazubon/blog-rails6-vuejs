@@ -10,6 +10,7 @@ json.articles do
       json.array! article.tags do |tag|
         json.id tag.id
         json.name tag.name
+        json.tag_path tag_articles_path(tag)
       end
     end
   end

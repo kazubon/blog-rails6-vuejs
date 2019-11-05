@@ -3,14 +3,14 @@ class ArticleSearchForm
   include ActiveModel::Attributes
 
   attribute :title, :string
-  attribute :tag_name, :string
-  attribute :tag_id, :integer
+  attribute :tag, :string
+  attribute :user_id, :integer
   attribute :offset, :integer
   attr_accessor :current_user, :user
 
-  def initialize(current_user, user, params = {})
+  def initialize(current_user, params = {})
     @current_user = current_user
-    @user = user
+    @user = User.active.find(params[:user_id]) if params[:user_id].present?
     super(params)
   end
 
@@ -37,9 +37,8 @@ class ArticleSearchForm
     if title.present?
       rel = rel.where('title LIKE ?', '%' + title + '%')
     end
-    if tag_name.present?
-      rel = rel.joins(:tags).
-        where('LOWER(tags.name) = LOWER(?)', tag_name)
+    if tag.present?
+      rel = rel.joins(:tags).where('LOWER(tags.name) = LOWER(?)', tag)
     end
 
     rel

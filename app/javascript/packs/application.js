@@ -10,15 +10,15 @@ import ArticleForm from '../article_form.vue';
 Vue.use(TurbolinksAdapter);
 
 document.addEventListener('turbolinks:load', () => {
-  let parts = [
+  let apps = [
     { elem: '#article-search', object: ArticleSearch },
     { elem: '#article-form', object: ArticleForm }
   ];
 
-  parts.forEach((part) => {
-    if($(part.elem).length) {
-      part.object.options = $(part.elem).data();
-      new Vue(part.object).$mount(part.elem);
+  apps.forEach((app) => {
+    if($(app.elem).length) {
+      let railsData = $(app.elem).data();
+      new Vue({ ...app.object, propsData: { railsData } }).$mount(app.elem);
     }
   });
 });
