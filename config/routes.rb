@@ -6,7 +6,4 @@ Rails.application.routes.draw do
   resources :users, only: %i() do
     resources :articles, only: %i(index)
   end
-  resources :tags, only: %i() do
-    resources :articles, only: %i(index)
-  end
 end

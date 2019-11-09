@@ -1,12 +1,11 @@
 <template>
   <div>
-    <form action="/articles" method="get" class="form-inline mb-4">
+    <form :action="path" method="get" class="form-inline mb-4">
       <input type="text" name="q[title]" class="form-control mr-3 mb-2"
         v-model="params.title" placeholder="タイトル">
       <input type="text" name="q[tag]" class="form-control mr-3 mb-2"
         v-model="params.tag" placeholder="タグ">
       <button type="submit" class="btn btn-outline-primary mb-2">検索</button>
-      <input type="hidden" name="q[user_id]" v-model="params.user_id" />
     </form>
     <div class="articles mb-4">
       <div class="text-right mb-3">{{articlesCount}}件</div>
@@ -31,12 +30,10 @@ import axios from 'axios';
 import qs from 'qs';
 
 export default {
-  props: ['railsData'],
+  props: ['path'],
   data: function () {
     return {
-      params: {
-        title: null, tag: null, user_id: null
-      },
+      params: {},
       articles: [],
       articlesCount: 0,
       offset: 0
@@ -48,19 +45,20 @@ export default {
     }
   },
   created () {
-    let userId = this.railsData.userId;
-    let tag = this.railsData.tag;
     let params = qs.parse(location.search.slice(1));
-    this.params = params.q || { user_id: userId, tag: tag };
+    this.params = params.q || {};
     this.getArticles();
   },
   methods: {
     getArticles() {
+      if(!this.path) {
+        return;
+      }
       let params = { q: this.params };
       if(this.offset > 0) {
         params.offset = this.offset;
       };
-      let path = '/articles.json?' + qs.stringify(params, { arrayFormat: 'brackets'});
+      let path = this.path + '.json?' + qs.stringify(params);
       axios.get(path).then((res) => {
         this.articles = this.articles.concat(res.data.articles);
         this.articlesCount = res.data.articles_count;

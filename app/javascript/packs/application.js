@@ -17,8 +17,7 @@ document.addEventListener('turbolinks:load', () => {
 
   apps.forEach((app) => {
     if($(app.elem).length) {
-      let railsData = $(app.elem).data();
-      new Vue({ ...app.object, propsData: { railsData } }).$mount(app.elem);
+      new Vue({ ...app.object, propsData: sharedData }).$mount(app.elem);
     }
   });
 });

@@ -46,7 +46,7 @@ import axios from 'axios';
 import moment from 'moment';
 
 export default {
-  props: ['railsData'], 
+  props: ['path', 'submitPath', 'method'], 
   data: function () {
     return {
       article: {
@@ -54,15 +54,13 @@ export default {
         published_at: moment().format('YYYY-MM-DD HH:mm'),
         tags: []
       },
-      articleId: null,
       alert: null,
       errorMessages: []
     };
   },
   created () {
-    this.articleId = this.railsData.articleId;
-    if(this.articleId) {
-      axios.get(`/articles/${this.articleId}.json`).then((res) => {
+    if(this.path) {
+      axios.get(this.path + '.json').then((res) => {
         this.article = res.data.article;
         this.initTags();
       });
@@ -75,8 +73,8 @@ export default {
     submit(evt) {
       evt.preventDefault();
       axios({
-        method: (this.articleId ? 'patch' : 'post'),
-        url: (this.articleId ? `/articles/${this.articleId}.json` : '/articles.json'),
+        method: this.method,
+        url: this.submitPath + '.json',
         headers: { 'Content-type' : 'application/json; charset=utf-8' },
         data: {
           article: this.article,

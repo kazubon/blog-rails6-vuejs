@@ -20,4 +20,9 @@ class ApplicationController < ActionController::Base
     end
   end
   helper_method :current_user
+
+  def shared_data
+    @shared_data ||= {}
+  end
+  helper_method :shared_data
 end

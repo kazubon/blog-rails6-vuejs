@@ -4,22 +4,17 @@ class ArticleSearchForm
 
   attribute :title, :string
   attribute :tag, :string
-  attribute :user_id, :integer
-  attribute :offset, :integer
   attr_accessor :current_user, :user
 
-  def initialize(current_user, params = {})
+  def initialize(current_user, user, params = {})
     @current_user = current_user
-    @user = User.active.find(params[:user_id]) if params[:user_id].present?
+    @user = user
     super(params)
   end
 
-  def articles
-    rel = relation
-    if offset.present?
-      rel = rel.offset(offset)
-    end
-    rel.preload(:user).preload(:tags).order(published_at: :desc).limit(20)
+  def articles(options = {})
+    relation.preload(:user, :tags).order(published_at: :desc)
+      .limit(options[:limit]).offset(options[:offset])
   end
 
   def articles_count

@@ -6,7 +6,7 @@
 <p class="text-right text-secondary">
 <%= link_to @article.user.name, [@article.user, :articles] %>
 | <% @article.tags.each do |tag| %>
-  <span><%= tag.name %></span>
+  <%= link_to tag.name, articles_path(q: { tag: tag.name }) %>
 <% end %>
 | <%= @article.published_at.strftime('%Y-%m-%d %H:%M') %>
 <% if @article.editable_by?(current_user) %>

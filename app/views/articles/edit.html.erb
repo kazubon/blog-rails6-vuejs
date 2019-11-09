@@ -1,3 +1,8 @@
 <h1>記事の編集</h1>
 
-<%= content_tag :div, '', id: "article-form", data: { article_id: @article.id } %>
+<%
+  shared_data.merge!(path: edit_article_path(@article),
+    submitPath: article_path(@article), method: 'patch')
+%>
+
+<%= content_tag :div, '', id: "article-form" %>

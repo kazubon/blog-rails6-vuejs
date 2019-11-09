@@ -11,5 +11,6 @@
 </div>
 <% end %>
 
-<%= content_tag :div, '', id: "article-search",
-      data: { user_id: @user.try(:id), tag: @tag.try(:name) } %>
+<% shared_data[:path] = @user ? user_articles_path(@user) : articles_path %>
+
+<%= content_tag :div, '', id: "article-search" %>
