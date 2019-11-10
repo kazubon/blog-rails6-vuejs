@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2019_10_31_053328) do
 
-  create_table "articles", force: :cascade do |t|
+  create_table "entries", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "title"
     t.text "body"
@@ -20,13 +20,13 @@ ActiveRecord::Schema.define(version: 2019_10_31_053328) do
     t.datetime "published_at", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_articles_on_user_id"
+    t.index ["user_id"], name: "index_entries_on_user_id"
   end
 
   create_table "taggings", force: :cascade do |t|
     t.integer "tag_id", null: false
-    t.integer "article_id", null: false
-    t.index ["article_id"], name: "index_taggings_on_article_id"
+    t.integer "entry_id", null: false
+    t.index ["entry_id"], name: "index_taggings_on_entry_id"
     t.index ["tag_id"], name: "index_taggings_on_tag_id"
   end
 

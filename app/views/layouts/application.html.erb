@@ -8,10 +8,10 @@
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <%= render 'shared/shared_data' %>
   </head>
 
   <body>
+    <%= render 'shared/shared_data' %>
     <%= render 'shared/header' %>
     <div class="col-sm-6 mx-auto">
       <% if flash.notice.present? %>

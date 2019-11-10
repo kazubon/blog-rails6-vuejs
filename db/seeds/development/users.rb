@@ -1,5 +1,5 @@
 Tagging.delete_all
-Article.delete_all
+Entry.delete_all
 User.delete_all
 
 User.create!(

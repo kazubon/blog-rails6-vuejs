@@ -1,4 +1,4 @@
-class ArticlesController < ApplicationController
+class EntriesController < ApplicationController
   before_action :require_login, except: %i(index show)
 
   def index
@@ -6,19 +6,19 @@ class ArticlesController < ApplicationController
     respond_to do |format|
       format.html
       format.json {
-        @form = ArticleSearchForm.new(current_user, @user, search_params)
-        @articles = @form.articles(limit: 20, offset: params[:offset])
+        @form = EntrySearchForm.new(current_user, @user, search_params)
+        @entries = @form.entries(limit: 20, offset: params[:offset])
       }
     end
   end
 
   def show
-    @article = Article.find(params[:id])
-    raise NotFound unless @article.readable_by?(current_user)
+    @entry = Entry.find(params[:id])
+    raise NotFound unless @entry.readable_by?(current_user)
   end
 
   def new
-    @article = Article.new
+    @entry = Entry.new
     respond_to do |format|
       format.html
       format.json { render :show }
@@ -26,7 +26,7 @@ class ArticlesController < ApplicationController
   end
 
   def edit
-    @article = current_user.articles.find(params[:id])
+    @entry = current_user.entries.find(params[:id])
     respond_to do |format|
       format.html
       format.json { render :show }
@@ -34,11 +34,11 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    @article = Article.new
-    @form = ArticleForm.new(current_user, @article, article_params)
+    @entry = Entry.new
+    @form = EntryForm.new(current_user, @entry, entry_params)
     if @form.save
       flash.notice = '記事を作成しました。'
-      render json: { location: article_path(@article) }
+      render json: { location: entry_path(@entry) }
     else
       render json: { alert: '記事を作成できませんでした。', errors: @form.errors.full_messages },
         status: :unprocessable_entity
@@ -46,11 +46,11 @@ class ArticlesController < ApplicationController
   end
 
   def update
-    @article = current_user.articles.find(params[:id])
-    @form = ArticleForm.new(current_user, @article, article_params)
+    @entry = current_user.entries.find(params[:id])
+    @form = EntryForm.new(current_user, @entry, entry_params)
     if @form.save
       flash.notice = '記事を更新しました。'
-      render json: { location: article_path(@article) }
+      render json: { location: entry_path(@entry) }
     else
       render json: { alert: '記事を更新できませんでした。', errors: @form.errors.full_messages },
         status: :unprocessable_entity
@@ -58,9 +58,9 @@ class ArticlesController < ApplicationController
   end
 
   def destroy
-    @article = current_user.articles.find(params[:id])
-    @article.destroy
-    redirect_to :articles, notice: '記事を削除しました。'
+    @entry = current_user.entries.find(params[:id])
+    @entry.destroy
+    redirect_to :entries, notice: '記事を削除しました。'
   end
 
   private
@@ -69,8 +69,8 @@ class ArticlesController < ApplicationController
     params.require(:q).permit(:title, :tag)
   end
 
-  def article_params
-    params.require(:article).permit(
+  def entry_params
+    params.require(:entry).permit(
       :title, :body, :published_at, :draft, tags: [ :name ]
     )
   end

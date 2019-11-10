@@ -1,4 +1,4 @@
 class Tagging < ApplicationRecord
-  belongs_to :article
+  belongs_to :entry
   belongs_to :tag
 end

@@ -5,12 +5,12 @@
   </div>
   <% if @user == current_user %>
     <div class="col-md text-right">
-      <%= link_to '新規作成', :new_article %>
+      <%= link_to '新規作成', :new_entry %>
     </div>
   <% end %>
 </div>
 <% end %>
 
-<% shared_data[:path] = @user ? user_articles_path(@user) : articles_path %>
+<% shared_data[:path] = @user ? user_entries_path(@user) : entries_path %>
 
-<%= content_tag :div, '', id: "article-search" %>
+<%= content_tag :div, '', id: "entry-list" %>

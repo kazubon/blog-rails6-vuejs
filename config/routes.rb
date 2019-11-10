@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
-  root 'articles#index'
+  root 'entries#index'
 
   resource :session, only: %i(new create destroy)
-  resources :articles
+  resources :entries
   resources :users, only: %i() do
-    resources :articles, only: %i(index)
+    resources :entries, only: %i(index)
   end
 end

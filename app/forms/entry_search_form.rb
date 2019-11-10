@@ -1,4 +1,4 @@
-class ArticleSearchForm
+class EntrySearchForm
   include ActiveModel::Model
   include ActiveModel::Attributes
 
@@ -12,21 +12,21 @@ class ArticleSearchForm
     super(params)
   end
 
-  def articles(options = {})
+  def entries(options = {})
     relation.preload(:user, :tags).order(published_at: :desc)
       .limit(options[:limit]).offset(options[:offset])
   end
 
-  def articles_count
+  def entries_count
     relation.count
   end
 
   private
   def relation
     rel = if user
-      user == current_user ? user.articles : user.articles.published
+      user == current_user ? user.entries : user.entries.published
     else
-      Article.published
+      Entry.published
     end
 
     if title.present?

@@ -1,5 +1,5 @@
 Tagging.delete_all
-Article.delete_all
+Entry.delete_all
 
 users = User.all
 tags = Tag.all
@@ -8,7 +8,7 @@ tag_count = Tag.count
 Faker::Config.locale = :en
 
 100.times do
-  Article.create!(
+  Entry.create!(
     user: users.sample,
     title: Faker::Beer.name,
     body: Faker::Lorem.paragraph(sentence_count: 5, supplemental: true, random_sentences_to_add: 5),

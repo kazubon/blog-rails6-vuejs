@@ -4,15 +4,15 @@ require("turbolinks").start();
 
 import Vue from 'vue';
 import TurbolinksAdapter from 'vue-turbolinks'
-import ArticleSearch from '../article_search.vue';
-import ArticleForm from '../article_form.vue';
+import EntryList from '../entry_list.vue';
+import EntryForm from '../entry_form.vue';
 
 Vue.use(TurbolinksAdapter);
 
 document.addEventListener('turbolinks:load', () => {
   let apps = [
-    { elem: '#article-search', object: ArticleSearch },
-    { elem: '#article-form', object: ArticleForm }
+    { elem: '#entry-list', object: EntryList },
+    { elem: '#entry-form', object: EntryForm }
   ];
 
   apps.forEach((app) => {

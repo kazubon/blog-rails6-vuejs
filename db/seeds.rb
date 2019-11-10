@@ -1,4 +1,4 @@
-tables = %w(users tags articles)
+tables = %w(users tags entries)
 
 tables.each do |name|
   file = Rails.root.join('db', 'seeds', Rails.env, "#{name}.rb")

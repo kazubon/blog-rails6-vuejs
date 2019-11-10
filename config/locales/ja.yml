@@ -1,7 +1,7 @@
 ja:
   activemodel:
     attributes:
-      article_form:
+      entry_form:
         title: タイトル
         body: 本文
         tags: タグ
