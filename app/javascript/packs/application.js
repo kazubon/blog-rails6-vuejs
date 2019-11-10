@@ -20,7 +20,7 @@ document.addEventListener('turbolinks:load', () => {
       new Vue({
         el: app.elem,
         render: h => h(app.object, { props: SharedData }),
-      }).$mount();
+      });
     }
   });
 });
