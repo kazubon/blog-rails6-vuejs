@@ -10,7 +10,12 @@
     <div class="entries mb-4">
       <div class="text-right mb-3">{{entriesCount}}件</div>
       <div v-for="entry in entries" :key="entry.id" class="entry">
-        <div><a :href="entry.path">{{entry.title}}</a></div>
+        <div>
+          <a :href="entry.path">
+            <template v-if="entry.draft">（下書き） </template>
+            {{entry.title}}
+          </a>
+        </div>
         <div class="text-right text-secondary">
           <a :href="entry.user_path">{{entry.user_name}}</a> |
           <a v-for="tag in entry.tags" :key="tag.id" class="mr-2"

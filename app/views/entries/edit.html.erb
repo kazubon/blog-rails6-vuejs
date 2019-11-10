@@ -1,8 +1,5 @@
 <h1>記事の編集</h1>
 
-<%
-  shared_data.merge!(path: edit_entry_path(@entry),
-    submitPath: entry_path(@entry), method: 'patch')
-%>
+<% shared_data[:path] = edit_entry_path(@entry) %>
 
 <%= content_tag :div, '', id: "entry-form" %>

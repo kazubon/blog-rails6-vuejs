@@ -5,6 +5,7 @@ json.entries do
     json.path entry_path(entry)
     json.user_name entry.user.name
     json.user_path user_entries_path(entry.user)
+    json.draft entry.draft?
     json.published_at entry.published_at.try(:strftime, '%Y-%m-%d %H:%M')
     json.tags do
       json.array! entry.tags do |tag|

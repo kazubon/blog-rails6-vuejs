@@ -36,7 +36,7 @@
         <input type="checkbox" v-model="entry.draft" id="entry-draft" value="1">
         <label for="entry-draft">下書き</label>
       </div>
-      <button type="submit" class="btn btn-outline-primary">{{entry.id ? '更新' : '作成'}}</button>
+      <button type="submit" class="btn btn-outline-primary">{{newRecord ? '作成' : '更新'}}</button>
     </form>
   </div>
 </template>
@@ -46,7 +46,7 @@ import axios from 'axios';
 import moment from 'moment';
 
 export default {
-  props: ['path', 'submitPath', 'method'], 
+  props: ['path'], 
   data: function () {
     return {
       entry: {
@@ -54,26 +54,25 @@ export default {
         published_at: moment().format('YYYY-MM-DD HH:mm'),
         tags: []
       },
+      newRecord: true,
+      submitPath: null,
       alert: null,
       errorMessages: []
     };
   },
   created () {
-    if(this.path) {
-      axios.get(this.path + '.json').then((res) => {
-        this.entry = res.data.entry;
-        this.initTags();
-      });
-    }
-    else {
+    axios.get(this.path + '.json').then((res) => {
+      this.entry = res.data.entry;
+      this.newRecord = res.data.newRecord;
+      this.submitPath = res.data.submitPath;
       this.initTags();
-    }
+    });
   },
   methods: {
     submit(evt) {
       evt.preventDefault();
       axios({
-        method: this.method,
+        method: this.newRecord ? 'post' : 'patch',
         url: this.submitPath + '.json',
         headers: { 'Content-type' : 'application/json; charset=utf-8' },
         data: {

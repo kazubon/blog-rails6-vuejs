@@ -9,3 +9,5 @@ json.entry do
     end
   end
 end
+json.newRecord @entry.new_record?
+json.submitPath @entry.new_record? ? entries_path : entry_path(@entry)

@@ -17,7 +17,10 @@ document.addEventListener('turbolinks:load', () => {
 
   apps.forEach((app) => {
     if($(app.elem).length) {
-      new Vue({ ...app.object, propsData: sharedData }).$mount(app.elem);
+      new Vue({
+        el: app.elem,
+        render: h => h(app.object, { props: SharedData }),
+      }).$mount();
     }
   });
 });
