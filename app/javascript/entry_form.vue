@@ -74,13 +74,13 @@ export default {
       axios({
         method: this.newRecord ? 'post' : 'patch',
         url: this.submitPath + '.json',
-        headers: { 'Content-type' : 'application/json; charset=utf-8' },
-        data: {
-          entry: this.entry,
-          authenticity_token: $('meta[name="csrf-token"]').attr('content')
-        }
+        headers: {
+          'Content-type' : 'application/json; charset=utf-8',
+          'X-CSRF-Token' : $('meta[name="csrf-token"]').attr('content')
+        },
+        data: { entry: this.entry }
       }).then((res) => {
-        location.href = res.data.location;
+        Turbolinks.visit(res.data.location);
       }).catch((error) => {
         if(error.response.status == 422) {
           this.alert = error.response.data.alert;
