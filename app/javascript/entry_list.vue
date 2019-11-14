@@ -1,9 +1,9 @@
 <template>
   <div>
     <form :action="path" method="get" class="form-inline mb-4">
-      <input type="text" name="q[title]" class="form-control mr-3 mb-2"
+      <input type="text" name="title" class="form-control mr-3 mb-2"
         v-model="params.title" placeholder="タイトル">
-      <input type="text" name="q[tag]" class="form-control mr-3 mb-2"
+      <input type="text" name="tag" class="form-control mr-3 mb-2"
         v-model="params.tag" placeholder="タグ">
       <button type="submit" class="btn btn-outline-primary mb-2">検索</button>
     </form>
@@ -50,8 +50,7 @@ export default {
     }
   },
   created () {
-    let params = qs.parse(location.search.slice(1));
-    this.params = params.q || {};
+    this.params = qs.parse(location.search.slice(1));
     this.getEntries();
   },
   methods: {
@@ -59,10 +58,7 @@ export default {
       if(!this.path) {
         return;
       }
-      let params = { q: this.params };
-      if(this.offset > 0) {
-        params.offset = this.offset;
-      };
+      let params = { ...this.params, offset: this.offset };
       let path = this.path + '.json?' + qs.stringify(params);
       axios.get(path).then((res) => {
         this.entries = this.entries.concat(res.data.entries);

@@ -4,6 +4,8 @@ class EntrySearchForm
 
   attribute :title, :string
   attribute :tag, :string
+  attribute :offset, :integer
+  attribute :sort_key, :string
   attr_accessor :current_user, :user
 
   def initialize(current_user, user, params = {})
@@ -12,9 +14,14 @@ class EntrySearchForm
     super(params)
   end
 
-  def entries(options = {})
-    relation.preload(:user, :tags).order(published_at: :desc)
-      .limit(options[:limit]).offset(options[:offset])
+  def assign_attributes(params)
+    attribute_names.each {|name| send("#{name}=", params[name.to_sym]) }
+  end
+
+  def entries
+    key = (sort_key == 'stars_count' ? :stars_count : :published_at)
+    relation.preload(:user, :tags).order(key => :desc)
+      .limit(20).offset(offset)
   end
 
   def entries_count

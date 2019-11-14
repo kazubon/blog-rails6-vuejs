@@ -1,5 +1,5 @@
 json.entries do
-  json.array! @entries do |entry|
+  json.array! @form.entries do |entry|
     json.id entry.id
     json.title entry.title
     json.path entry_path(entry)

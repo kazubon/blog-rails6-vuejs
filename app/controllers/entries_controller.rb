@@ -6,8 +6,7 @@ class EntriesController < ApplicationController
     respond_to do |format|
       format.html
       format.json {
-        @form = EntrySearchForm.new(current_user, @user, search_params)
-        @entries = @form.entries(limit: 20, offset: params[:offset])
+        @form = EntrySearchForm.new(current_user, @user, params)
       }
     end
   end
@@ -64,11 +63,6 @@ class EntriesController < ApplicationController
   end
 
   private
-  def search_params
-    return {} unless params.has_key?(:q)
-    params.require(:q).permit(:title, :tag)
-  end
-
   def entry_params
     params.require(:entry).permit(
       :title, :body, :published_at, :draft, tags: [ :name ]
