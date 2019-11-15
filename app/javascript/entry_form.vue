@@ -36,7 +36,14 @@
         <input type="checkbox" v-model="entry.draft" id="entry-draft" value="1">
         <label for="entry-draft">下書き</label>
       </div>
-      <button type="submit" class="btn btn-outline-primary">{{newRecord ? '作成' : '更新'}}</button>
+      <div class="row">
+        <div class="col">
+          <button type="submit" class="btn btn-outline-primary">{{newRecord ? '作成' : '更新'}}</button>
+        </div>
+        <div class="col text-right" v-if="!newRecord">
+          <button type="button" class="btn btn-outline-danger" @click="destroy">削除</button>
+        </div>
+      </div>
     </form>
   </div>
 </template>
@@ -98,6 +105,22 @@ export default {
         for(let i = 0; i < 5 - len; i++) {
           this.entry.tags.push({ name: '' });
         }
+      }
+    },
+    destroy() {
+      if(confirm('本当に削除しますか?')) {
+        axios({
+          method: 'delete',
+          url: this.submitPath + '.json',
+          headers: {
+            'X-CSRF-Token' : $('meta[name="csrf-token"]').attr('content')
+          }
+        }).then((res) => {
+          Turbolinks.visit(res.data.location);
+        }).catch((error) => {
+          this.alert = `${error.response.status} ${error.response.statusText}`;
+          window.scrollTo(0, 0);
+        });
       }
     }
   }

@@ -59,7 +59,8 @@ class EntriesController < ApplicationController
   def destroy
     @entry = current_user.entries.find(params[:id])
     @entry.destroy
-    redirect_to :entries, notice: '記事を削除しました。'
+    flash.notice = '記事を削除しました。'
+    render json: { location: user_entries_path(current_user) }
   end
 
   private
