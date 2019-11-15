@@ -35,7 +35,9 @@ import axios from 'axios';
 import qs from 'qs';
 
 export default {
-  props: ['path'],
+  props: {
+    path: { type: String, required: true }
+  },
   data: function () {
     return {
       params: {},
@@ -55,10 +57,8 @@ export default {
   },
   methods: {
     getEntries() {
-      if(!this.path) {
-        return;
-      }
-      let params = { ...this.params, offset: this.offset };
+      let params = qs.parse(location.search.slice(1));
+      params.offset = this.offset;
       let path = this.path + '.json?' + qs.stringify(params);
       axios.get(path).then((res) => {
         this.entries = this.entries.concat(res.data.entries);

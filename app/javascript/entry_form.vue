@@ -43,15 +43,15 @@
 
 <script>
 import axios from 'axios';
-import moment from 'moment';
 
 export default {
-  props: ['path'], 
+  props: {
+    path: { type: String, required: true }
+  },
   data: function () {
     return {
       entry: {
-        title: null, body: null, draft: false,
-        published_at: moment().format('YYYY-MM-DD HH:mm'),
+        title: null, body: null, draft: false, published_at: null,
         tags: []
       },
       newRecord: true,
