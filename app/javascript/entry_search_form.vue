@@ -5,6 +5,7 @@
         v-model="params.title" placeholder="タイトル">
       <input type="text" name="tag" class="form-control mr-3 mb-2"
         v-model="params.tag" placeholder="タグ">
+      <input type="hidden" name="sort" v-model="params.sort">
       <button type="submit" class="btn btn-outline-primary mb-2">検索</button>
     </form>
   </div>

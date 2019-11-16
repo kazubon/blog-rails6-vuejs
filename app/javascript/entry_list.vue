@@ -1,6 +1,12 @@
 <template>
   <div>
-    <div class="text-right mb-3">{{entriesCount}}件</div>
+    <div class="text-right mb-3">
+      {{entriesCount}}件 | 
+      <a :href="sortPath('date')" v-if="params.sort == 'stars'">日付順</a>
+      <template v-else>日付順</template>
+      | <a :href="sortPath('stars')" v-if="params.sort != 'stars'">いいね順</a>
+      <template v-else>いいね順</template>
+    </div>
     <div class="entries mb-4">
       <div v-for="entry in entries" :key="entry.id" class="entry">
         <div>
@@ -14,7 +20,7 @@
           <a v-for="tag in entry.tags" :key="tag.id" class="mr-2"
               :href="tag.tag_path">{{tag.name}}</a> |
           {{entry.published_at}} |
-          <span class="text-warning" v-if="entry.stars_count > 0">★ {{entry.stars_count}}</span>
+          <span class="text-warning" v-if="entry.stars_count > 0">★{{entry.stars_count}}</span>
         </div>
       </div>
     </div>
@@ -61,6 +67,10 @@ export default {
     moreClicked() {
       this.offset += 20;
       this.getEntries();
+    },
+    sortPath(key) {
+      let params = { ...this.params, sort: key };
+      return this.path + '?' + qs.stringify(params);
     }
   }
 }
