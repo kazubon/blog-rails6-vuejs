@@ -1,14 +1,7 @@
 <template>
   <div>
-    <form :action="path" method="get" class="form-inline mb-4">
-      <input type="text" name="title" class="form-control mr-3 mb-2"
-        v-model="params.title" placeholder="タイトル">
-      <input type="text" name="tag" class="form-control mr-3 mb-2"
-        v-model="params.tag" placeholder="タグ">
-      <button type="submit" class="btn btn-outline-primary mb-2">検索</button>
-    </form>
+    <div class="text-right mb-3">{{entriesCount}}件</div>
     <div class="entries mb-4">
-      <div class="text-right mb-3">{{entriesCount}}件</div>
       <div v-for="entry in entries" :key="entry.id" class="entry">
         <div>
           <a :href="entry.path">
@@ -57,8 +50,7 @@ export default {
   },
   methods: {
     getEntries() {
-      let params = qs.parse(location.search.slice(1));
-      params.offset = this.offset;
+      let params = { ...this.params, offset: this.offset };
       let path = this.path + '.json?' + qs.stringify(params);
       axios.get(path).then((res) => {
         this.entries = this.entries.concat(res.data.entries);

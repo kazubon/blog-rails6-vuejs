@@ -12,4 +12,5 @@
 <% end %>
 
 <% path = @user ? user_entries_path(@user) : entries_path %>
+<%= content_tag :div, '', id: "entry-search-form", data: { path: path } %>
 <%= content_tag :div, '', id: "entry-list", data: { path: path } %>
