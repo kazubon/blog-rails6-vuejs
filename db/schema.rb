@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_31_053328) do
+ActiveRecord::Schema.define(version: 2019_11_16_013349) do
 
   create_table "entries", force: :cascade do |t|
     t.integer "user_id", null: false
@@ -18,9 +18,19 @@ ActiveRecord::Schema.define(version: 2019_10_31_053328) do
     t.text "body"
     t.boolean "draft", default: false, null: false
     t.datetime "published_at", null: false
+    t.integer "stars_count", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_entries_on_user_id"
+  end
+
+  create_table "stars", force: :cascade do |t|
+    t.integer "entry_id", null: false
+    t.integer "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["entry_id"], name: "index_stars_on_entry_id"
+    t.index ["user_id"], name: "index_stars_on_user_id"
   end
 
   create_table "taggings", force: :cascade do |t|
@@ -34,6 +44,7 @@ ActiveRecord::Schema.define(version: 2019_10_31_053328) do
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_tags_on_name"
   end
 
   create_table "users", force: :cascade do |t|

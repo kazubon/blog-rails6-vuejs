@@ -13,7 +13,8 @@
           <a :href="entry.user_path">{{entry.user_name}}</a> |
           <a v-for="tag in entry.tags" :key="tag.id" class="mr-2"
               :href="tag.tag_path">{{tag.name}}</a> |
-          {{entry.published_at}}
+          {{entry.published_at}} |
+          <span class="text-warning" v-if="entry.stars_count > 0">★ {{entry.stars_count}}</span>
         </div>
       </div>
     </div>

@@ -1,4 +1,3 @@
-Tagging.delete_all
 Tag.delete_all
 
 Tag.create!(name: 'Ruby')

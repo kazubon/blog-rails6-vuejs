@@ -7,6 +7,7 @@ import TurbolinksAdapter from 'vue-turbolinks'
 import EntrySearchForm from '../entry_search_form.vue';
 import EntryList from '../entry_list.vue';
 import EntryForm from '../entry_form.vue';
+import EntryStar from '../entry_star.vue';
 
 Vue.use(TurbolinksAdapter);
 
@@ -14,7 +15,8 @@ document.addEventListener('turbolinks:load', () => {
   let apps = [
     { elem: '#entry-search-form', object: EntrySearchForm },
     { elem: '#entry-list', object: EntryList },
-    { elem: '#entry-form', object: EntryForm }
+    { elem: '#entry-form', object: EntryForm },
+    { elem: '#entry-star', object: EntryStar }
   ];
 
   apps.forEach((app) => {
