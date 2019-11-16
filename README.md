@@ -1,24 +1,24 @@
-# README
+# Blog
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Rails 6とVue.jsによるフォームのサンプルです。
 
-Things you may want to cover:
+## 動作環境
 
-* Ruby version
+Ruby 2.6.4、Ruby on Rails 6.0, Webpacker 4, Vue.js 2.6
 
-* System dependencies
+## 開発環境の用意
 
-* Configuration
+```
+$ bundle install
+$ yarn install
+$ bin/rails db:migrate
+$ bin/rails db:seed
+```
 
-* Database creation
+db/seeds/development/users.rb にあるユーザー（alice@example.com / password など）でログインしてください。
 
-* Database initialization
+## 作っていない機能
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- ユーザーの新規登録、アカウント管理
+- IE 11対応
+- テスト
