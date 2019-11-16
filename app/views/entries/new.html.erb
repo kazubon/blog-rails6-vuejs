@@ -1,5 +1,3 @@
 <h1>記事の作成</h1>
 
-<% shared_data[:path] = new_entry_path %>
-
-<div id="entry-form"></div>
+<%= content_tag :div, '', id: "entry-form", data: { path: new_entry_path } %>
