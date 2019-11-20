@@ -3,19 +3,16 @@
     <form @submit="submit">
       <div v-if="alert" class="alert alert-danger">
         {{alert}}
-        <ul class="mb-0">
-          <li v-for="(error, index) in errorMessages" :key="index">{{error}}</li>
-        </ul>
       </div>
       <div class="form-group">
         <label for="entry-title">タイトル</label>
         <input type="text" v-model="entry.title" id="entry-title"
-          class="form-control" required maxlength="255">
+          class="form-control" required maxlength="255" pattern=".*[^\s]+.*">
       </div>
       <div class="form-group">
         <label for="entry-body">本文</label>
-        <textarea v-model="entry.body" id="entry-body"
-          class="form-control" cols="80" rows="15" required>
+        <textarea v-model="entry.body" id="entry-body" cols="80" rows="15"
+          class="form-control" required maxlength="40000">
         </textarea>
       </div>
       <div class="form-group">
@@ -30,7 +27,7 @@
         <label for="entry-published_at">日時</label>
         <input type="text" v-model="entry.published_at" id="entry-published_at"
           class="form-control"
-          pattern="^\d{4}(-|\/)\d{2}(-|\/)\d{2} +\d{2}:\d{2}$">
+          pattern="\d{4}(-|\/)\d{2}(-|\/)\d{2} +\d{2}:\d{2}">
       </div>
       <div class="form-group mb-4">
         <input type="checkbox" v-model="entry.draft" id="entry-draft" value="1">
@@ -78,6 +75,9 @@ export default {
   methods: {
     submit(evt) {
       evt.preventDefault();
+      if(!this.validate()) {
+        return;
+      }
       axios({
         method: this.newRecord ? 'post' : 'patch',
         url: this.submitPath + '.json',
@@ -108,20 +108,29 @@ export default {
       }
     },
     destroy() {
-      if(confirm('本当に削除しますか?')) {
-        axios({
-          method: 'delete',
-          url: this.submitPath + '.json',
-          headers: {
-            'X-CSRF-Token' : $('meta[name="csrf-token"]').attr('content')
-          }
-        }).then((res) => {
-          Turbolinks.visit(res.data.location);
-        }).catch((error) => {
-          this.alert = `${error.response.status} ${error.response.statusText}`;
-          window.scrollTo(0, 0);
-        });
+      if(!confirm('本当に削除しますか?')) {
+        return;
       }
+      axios({
+        method: 'delete',
+        url: this.submitPath + '.json',
+        headers: {
+          'X-CSRF-Token' : $('meta[name="csrf-token"]').attr('content')
+        }
+      }).then((res) => {
+        Turbolinks.visit(res.data.location);
+      }).catch((error) => {
+        this.alert = `${error.response.status} ${error.response.statusText}`;
+        window.scrollTo(0, 0);
+      });
+    },
+    validate() {
+      if(!(this.entry.body && this.entry.body.match(/[^\s]+/))) {
+        this.alert = '本文を入力してください。';
+        window.scrollTo(0, 0);
+        return false;
+      }
+      return true;
     }
   }
 }
