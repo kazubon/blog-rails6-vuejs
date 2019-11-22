@@ -6,7 +6,7 @@ class EntriesController < ApplicationController
     respond_to do |format|
       format.html
       format.json {
-        @form = EntrySearchForm.new(current_user, @user, params)
+        @form = Entries::SearchForm.new(current_user, @user, params)
       }
     end
   end
@@ -34,7 +34,7 @@ class EntriesController < ApplicationController
 
   def create
     @entry = Entry.new
-    @form = EntryForm.new(current_user, @entry, entry_params)
+    @form = Entries::Form.new(current_user, @entry, entry_params)
     if @form.save
       flash.notice = '記事を作成しました。'
       render json: { location: entry_path(@entry) }
@@ -46,7 +46,7 @@ class EntriesController < ApplicationController
 
   def update
     @entry = current_user.entries.find(params[:id])
-    @form = EntryForm.new(current_user, @entry, entry_params)
+    @form = Entries::Form.new(current_user, @entry, entry_params)
     if @form.save
       flash.notice = '記事を更新しました。'
       render json: { location: entry_path(@entry) }

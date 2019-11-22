@@ -4,10 +4,10 @@ require("turbolinks").start();
 
 import Vue from 'vue';
 import TurbolinksAdapter from 'vue-turbolinks'
-import EntrySearchForm from '../entry_search_form.vue';
-import EntryList from '../entry_list.vue';
-import EntryForm from '../entry_form.vue';
-import EntryStar from '../entry_star.vue';
+import EntrySearchForm from '../entries/search_form.vue';
+import EntryList from '../entries/list.vue';
+import EntryForm from '../entries/form.vue';
+import EntryStar from '../entries/star.vue';
 
 Vue.use(TurbolinksAdapter);
 

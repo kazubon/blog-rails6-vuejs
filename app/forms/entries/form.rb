@@ -1,4 +1,4 @@
-class EntryForm
+class Entries::Form
   include ActiveModel::Model
   include ActiveModel::Attributes
 

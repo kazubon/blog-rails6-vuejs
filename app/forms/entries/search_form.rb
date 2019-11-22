@@ -1,4 +1,4 @@
-class EntrySearchForm
+class Entries::SearchForm
   include ActiveModel::Model
   include ActiveModel::Attributes
 
