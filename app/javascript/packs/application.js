@@ -3,6 +3,7 @@ require("turbolinks").start();
 
 import Vue from 'vue';
 import TurbolinksAdapter from 'vue-turbolinks'
+import 'core-js';
 
 import EntryIndex from '../entries/index.vue';
 import EntryForm from '../entries/form.vue';
