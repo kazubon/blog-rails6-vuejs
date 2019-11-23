@@ -3,10 +3,11 @@ class EntriesController < ApplicationController
 
   def index
     @user = User.active.find(params[:user_id]) if params[:user_id].present?
+    @query = search_params
     respond_to do |format|
       format.html
       format.json {
-        @form = Entries::SearchForm.new(current_user, @user, params)
+        @form = Entries::SearchForm.new(current_user, @user, @query)
       }
     end
   end
@@ -64,6 +65,10 @@ class EntriesController < ApplicationController
   end
 
   private
+  def search_params
+    params.has_key?(:q) ? params[:q].permit! : {}
+  end
+
   def entry_params
     params.require(:entry).permit(
       :title, :body, :published_at, :draft, tags: [ :name ]

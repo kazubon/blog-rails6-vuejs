@@ -12,11 +12,18 @@ json.entries do
       json.array! entry.tags do |tag|
         json.id tag.id
         json.name tag.name
-        json.tag_path(@user ?
-          user_entries_path(@user, tag: tag.name) : entries_path(tag: tag.name)
+        json.tag_path(
+          @user ? user_entries_path(@user, q: { tag: tag.name }) :
+            entries_path(q: { tag: tag.name })
         )
       end
     end
   end
 end
 json.entries_count @form.entries_count
+
+json.query do
+  json.title @query[:title]
+  json.tag @query[:tag]
+  json.sort @query[:sort]
+end

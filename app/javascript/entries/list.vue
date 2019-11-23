@@ -2,9 +2,9 @@
   <div>
     <div class="text-right mb-3">
       {{entriesCount}}件 | 
-      <a :href="sortPath('date')" v-if="params.sort == 'stars'">日付順</a>
+      <a :href="sortPath('date')" v-if="query.sort == 'stars'">日付順</a>
       <template v-else>日付順</template>
-      | <a :href="sortPath('stars')" v-if="params.sort != 'stars'">いいね順</a>
+      | <a :href="sortPath('stars')" v-if="query.sort != 'stars'">いいね順</a>
       <template v-else>いいね順</template>
     </div>
     <div class="entries mb-4">
@@ -36,11 +36,11 @@ import qs from 'qs';
 
 export default {
   props: {
-    path: { type: String, required: true }
+    path: { type: String, required: true },
+    query: { type: Object }
   },
   data: function () {
     return {
-      params: {},
       entries: [],
       entriesCount: 0,
       offset: 0
@@ -52,12 +52,11 @@ export default {
     }
   },
   created () {
-    this.params = qs.parse(location.search.slice(1));
     this.getEntries();
   },
   methods: {
     getEntries() {
-      let params = { ...this.params, offset: this.offset };
+      let params = { q: { ...this.query, offset: this.offset } };
       let path = this.path + '.json?' + qs.stringify(params);
       axios.get(path).then((res) => {
         this.entries = this.entries.concat(res.data.entries);
@@ -69,7 +68,7 @@ export default {
       this.getEntries();
     },
     sortPath(key) {
-      let params = { ...this.params, sort: key };
+      let params = { q: { ...this.query, sort: key } };
       return this.path + '?' + qs.stringify(params);
     }
   }
