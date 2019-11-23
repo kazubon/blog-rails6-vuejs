@@ -1,9 +1,7 @@
 <template>
   <div>
     <form @submit="submit">
-      <div v-if="alert" class="alert alert-danger">
-        {{alert}}
-      </div>
+      <div v-if="alert" class="alert alert-danger">{{alert}}</div>
       <div class="form-group">
         <label for="entry-title">タイトル</label>
         <input type="text" v-model="entry.title" id="entry-title"
@@ -91,7 +89,6 @@ export default {
       }).catch((error) => {
         if(error.response.status == 422) {
           this.alert = error.response.data.alert;
-          this.errorMessages = error.response.data.errors;
         }
         else {
           this.alert = `${error.response.status} ${error.response.statusText}`;

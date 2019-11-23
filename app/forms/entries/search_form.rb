@@ -14,10 +14,6 @@ class Entries::SearchForm
     super(params)
   end
 
-  def assign_attributes(params)
-    attribute_names.each {|name| send("#{name}=", params[name.to_sym]) }
-  end
-
   def entries
     key = (sort == 'stars' ? :stars_count : :published_at)
     relation.preload(:user, :tags).order(key => :desc)

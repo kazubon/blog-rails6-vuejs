@@ -40,7 +40,7 @@ class EntriesController < ApplicationController
       flash.notice = '記事を作成しました。'
       render json: { location: entry_path(@entry) }
     else
-      render json: { alert: '記事を作成できませんでした。', errors: @form.errors.full_messages },
+      render json: { alert: '記事を作成できませんでした。' },
         status: :unprocessable_entity
     end
   end
@@ -66,7 +66,8 @@ class EntriesController < ApplicationController
 
   private
   def search_params
-    params.has_key?(:q) ? params[:q].permit! : {}
+    return {} unless params.has_key?(:q)
+    params.require(:q).permit(:title, :tag, :offset, :sort)
   end
 
   def entry_params
