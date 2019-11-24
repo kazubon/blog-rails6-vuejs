@@ -3,11 +3,10 @@ class EntriesController < ApplicationController
 
   def index
     @user = User.active.find(params[:user_id]) if params[:user_id].present?
-    @query = search_params
     respond_to do |format|
       format.html
       format.json {
-        @form = Entries::SearchForm.new(current_user, @user, @query)
+        @form = Entries::SearchForm.new(current_user, @user, search_params)
       }
     end
   end

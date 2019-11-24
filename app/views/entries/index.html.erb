@@ -11,10 +11,5 @@
 </div>
 <% end %>
 
-<%
-data = {
-  path: @user ? user_entries_path(@user) : entries_path,
-  query: @query
-}
-%>
-<%= content_tag :div, '', id: "entry-index", data: data %>
+<% path = @user ? user_entries_path(@user) : entries_path %>
+<%= content_tag :div, '', id: "entry-index", data: { path: path } %>
