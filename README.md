@@ -20,5 +20,3 @@ db/seeds/development/users.rb にあるユーザー（alice@example.com / passwo
 ## 作っていない機能
 
 - ユーザーの新規登録、アカウント管理
-- IE 11対応
-- テスト

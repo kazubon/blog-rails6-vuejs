@@ -13,15 +13,4 @@ class Entry < ApplicationRecord
   def editable_by?(current_user)
     user == current_user
   end
-
-  def put_star(current_user)
-    if current_user && current_user != user
-      if stars.exists?(user: current_user)
-        stars.where(user: current_user).destroy_all
-      else
-        stars.create!(user: current_user)
-      end
-    end
-    reload.stars_count
-  end
 end

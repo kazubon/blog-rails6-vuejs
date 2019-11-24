@@ -4,7 +4,6 @@ require("turbolinks").start();
 import 'core-js';
 import Vue from 'vue';
 import TurbolinksAdapter from 'vue-turbolinks'
-import axios from 'axios';
 
 import SessionForm from '../sessions/form.vue';
 import EntryIndex from '../entries/index.vue';
