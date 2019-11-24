@@ -50,7 +50,7 @@ export default {
   props: {
     path: { type: String, required: true }
   },
-  data: function () {
+  data() {
     return {
       entry: {
         title: null, body: null, draft: false, published_at: null,
@@ -58,11 +58,10 @@ export default {
       },
       newRecord: true,
       submitPath: null,
-      alert: null,
-      errorMessages: []
+      alert: null
     };
   },
-  created () {
+  created() {
     axios.get(this.path + '.json').then((res) => {
       this.entry = res.data.entry;
       this.newRecord = res.data.newRecord;
@@ -80,7 +79,6 @@ export default {
         method: this.newRecord ? 'post' : 'patch',
         url: this.submitPath + '.json',
         headers: {
-          'Content-type' : 'application/json; charset=utf-8',
           'X-CSRF-Token' : $('meta[name="csrf-token"]').attr('content')
         },
         data: { entry: this.entry }

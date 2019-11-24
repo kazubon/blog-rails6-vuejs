@@ -21,9 +21,3 @@ json.entries do
   end
 end
 json.entries_count @form.entries_count
-
-json.query do
-  json.title @query[:title]
-  json.tag @query[:tag]
-  json.sort @query[:sort]
-end

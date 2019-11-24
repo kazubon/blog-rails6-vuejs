@@ -1,7 +1,9 @@
-class LoginForm
+class Sessions::Form
   include ActiveModel::Model
+  include ActiveModel::Attributes
 
-  attr_accessor :email, :password
+  attribute :email, :string
+  attribute  :password, :string
   attr_reader :user
 
   def authenticate

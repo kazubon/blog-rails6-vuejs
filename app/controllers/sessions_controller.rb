@@ -1,16 +1,17 @@
 class SessionsController < ApplicationController
+  wrap_parameters :user
+
   def new
-    @form = LoginForm.new
   end
 
   def create
-    @form = LoginForm.new(login_params)
+    @form = Sessions::Form.new(login_params)
     if @form.authenticate
       session[:user_id] = @form.user.id
-      redirect_to [@form.user, :entries]
+      render json: { location: user_entries_path(@form.user) }
     else
-      flash.now.alert = "メールアドレスまたはパスワードが一致しません。"
-      render :new
+      render json: { alert: 'メールアドレスまたはパスワードが一致しません。' },
+        status: :unprocessable_entity
     end
   end
 
