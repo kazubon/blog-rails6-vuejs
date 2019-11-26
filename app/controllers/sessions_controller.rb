@@ -2,6 +2,7 @@ class SessionsController < ApplicationController
   wrap_parameters :user
 
   def new
+    @form = Sessions::Form.new
   end
 
   def create

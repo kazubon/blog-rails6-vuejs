@@ -1,3 +1,19 @@
 <h1>ログイン</h1>
 
-<%= content_tag :div, '', id: "session-form", data: { submit_path: session_path } %>
+<div id="session-form" v-cloak>
+  <%= form_for @form, as: :user, url: :session,
+        html: { '@submit' => "submit" } do |f| %>
+    <div v-if="alert" class="alert alert-danger">{{alert}}</div>
+    <div class="form-group">
+      <%= f.label :email, "メールアドレス" %>
+      <%= f.email_field :email, class: "form-control", required: true,
+        'v-model' => "email" %>
+    </div>
+    <div class="form-group mb-5">
+      <%= f.label :password, "パスワード" %>
+      <%= f.password_field :password, class: "form-control", required: true,
+        'v-model' => 'password' %>
+    </div>
+    <button type="submit" class="btn btn-outline-primary">ログイン</button>
+  <% end %>
+</div>

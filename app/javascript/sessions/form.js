@@ -1,27 +1,7 @@
-<template>
-  <div>
-    <form @submit="submit">
-      <div v-if="alert" class="alert alert-danger">{{alert}}</div>
-      <div class="form-group">
-        <label for="email">メールアドレス</label>
-        <input type="email" id="email" class="form-control" v-model="email" required>
-      </div>
-      <div class="form-group mb-5">
-        <label for="password">パスワード</label>
-        <input type="password" id="password" class="form-control" v-model="password" required>
-      </div>
-      <button type="submit" class="btn btn-outline-primary">ログイン</button>
-    </form>
-  </div>
-</template>
-
-<script>
 import axios from 'axios';
 
 export default {
-  props: {
-    submitPath: { type: String, required: true }
-  },
+  el: '#session-form',
   data() {
     return {
       email: null,
@@ -34,7 +14,7 @@ export default {
       evt.preventDefault();
       axios({
         method: 'post',
-        url: this.submitPath + '.json',
+        url: this.submitPath() + '.json',
         headers: {
           'X-CSRF-Token' : $('meta[name="csrf-token"]').attr('content')
         },
@@ -50,7 +30,9 @@ export default {
         }
         window.scrollTo(0, 0);
       });
+    },
+    submitPath() {
+      return $(this.$el).find('form').attr('action');
     }
   }
 }
-</script>

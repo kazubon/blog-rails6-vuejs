@@ -1,5 +1,9 @@
 @import "bootstrap";
 
+[v-cloak] {
+  display: none;
+}
+
 .width-auto {
   width: auto;
 }
