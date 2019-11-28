@@ -21,7 +21,7 @@ class EntriesController < ApplicationController
     @form = Entries::Form.new(current_user, @entry)
     respond_to do |format|
       format.html
-      format.json { render :show }
+      format.json { render :edit }
     end
   end
 
@@ -30,7 +30,7 @@ class EntriesController < ApplicationController
     @form = Entries::Form.new(current_user, @entry)
     respond_to do |format|
       format.html
-      format.json { render :show }
+      format.json
     end
   end
 

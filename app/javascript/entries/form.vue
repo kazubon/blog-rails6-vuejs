@@ -52,10 +52,7 @@ export default {
   },
   data() {
     return {
-      entry: {
-        title: null, body: null, draft: false, published_at: null,
-        tags: []
-      },
+      entry: {},
       newRecord: true,
       submitPath: null,
       alert: null
