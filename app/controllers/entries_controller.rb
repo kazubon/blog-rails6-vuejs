@@ -18,6 +18,7 @@ class EntriesController < ApplicationController
 
   def new
     @entry = Entry.new
+    @form = Entries::Form.new(current_user, @entry)
     respond_to do |format|
       format.html
       format.json { render :show }
@@ -26,6 +27,7 @@ class EntriesController < ApplicationController
 
   def edit
     @entry = current_user.entries.find(params[:id])
+    @form = Entries::Form.new(current_user, @entry)
     respond_to do |format|
       format.html
       format.json { render :show }
