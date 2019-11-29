@@ -3,12 +3,8 @@ class EntriesController < ApplicationController
 
   def index
     @user = User.active.find(params[:user_id]) if params[:user_id].present?
-    respond_to do |format|
-      format.html
-      format.json {
-        @form = Entries::SearchForm.new(current_user, @user, search_params)
-      }
-    end
+    @form = Entries::SearchForm.new(current_user, @user, search_params)
+    respond_to :html, :json
   end
 
   def show
@@ -28,10 +24,7 @@ class EntriesController < ApplicationController
   def edit
     @entry = current_user.entries.find(params[:id])
     @form = Entries::Form.new(current_user, @entry)
-    respond_to do |format|
-      format.html
-      format.json
-    end
+    respond_to :html, :json
   end
 
   def create
