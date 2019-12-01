@@ -11,5 +11,7 @@
 </div>
 <% end %>
 
-<% path = @user ? user_entries_path(@user) : entries_path %>
-<%= content_tag :div, '', id: "entry-index", data: { path: path } %>
+<script>
+var vueProps = <%= { userId: @user.try(:id), query: params[:q] || {} }.to_json.html_safe %>;
+</script>
+<div id="entry-index"></div>

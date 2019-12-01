@@ -4,7 +4,7 @@ class Star < ApplicationRecord
 
   class << self
     def put(user, entry)
-      if user && user != entry.user
+      if entry.starrable_by?(user)
         if entry.stars.exists?(user: user)
           entry.stars.where(user: user).destroy_all
         else

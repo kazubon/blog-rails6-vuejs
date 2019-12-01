@@ -35,10 +35,7 @@ import axios from 'axios';
 import qs from 'qs';
 
 export default {
-  props: {
-    path: { type: String, required: true },
-    query: { type: Object }
-  },
+  props: ['userId', 'query'],
   data: function () {
     return {
       entries: [],
@@ -56,8 +53,8 @@ export default {
   },
   methods: {
     getEntries() {
-      let params = { q: { ...this.query, offset: this.offset } };
-      let path = this.path + '.json?' + qs.stringify(params);
+      let params = { q: { ...this.query, offset: this.offset }, user_id: this.userId };
+      let path = '/entries.json?' + qs.stringify(params);
       axios.get(path).then((res) => {
         this.entries = this.entries.concat(res.data.entries);
         this.entriesCount = res.data.entries_count;
@@ -68,8 +65,8 @@ export default {
       this.getEntries();
     },
     sortPath(key) {
-      let params = { q: { ...this.query, sort: key } };
-      return this.path + '?' + qs.stringify(params);
+      let params = { q: { ...this.query, sort: key }, user_id: this.userId };
+      return '/entries?' + qs.stringify(params);
     }
   }
 }

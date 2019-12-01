@@ -18,5 +18,14 @@
 <%= h(@entry.body).gsub(/\n/, '<br>').html_safe %>
 </p>
 
-<%= content_tag :div, '', id: "entry-star",
-  data: { count: @entry.stars_count, submit_path: star_path(@entry) } %>
+<%
+props = {
+  starCount: @entry.stars_count,
+  entryId: @entry.id,
+  starrable: @entry.starrable_by?(current_user)
+}
+%>
+<script>
+var vueProps = <%= props.to_json.html_safe %>;
+</script>
+<div id="entry-star"></div>

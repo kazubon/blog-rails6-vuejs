@@ -24,7 +24,7 @@ document.addEventListener('turbolinks:load', () => {
     if($(app.elem).length) {
       new Vue({
         el: app.elem,
-        render: h => h(app.object, { props: $(app.elem).data() }),
+        render: h => h(app.object, { props: vueProps }),
       });
     }
   });

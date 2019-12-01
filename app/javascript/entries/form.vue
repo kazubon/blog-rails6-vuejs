@@ -33,9 +33,9 @@
       </div>
       <div class="row">
         <div class="col">
-          <button type="submit" class="btn btn-outline-primary">{{newRecord ? '作成' : '更新'}}</button>
+          <button type="submit" class="btn btn-outline-primary">{{entryId ? '更新' : '作成'}}</button>
         </div>
-        <div class="col text-right" v-if="!newRecord">
+        <div class="col text-right" v-if="entryId">
           <button type="button" class="btn btn-outline-danger" @click="destroy">削除</button>
         </div>
       </div>
@@ -47,22 +47,16 @@
 import axios from 'axios';
 
 export default {
-  props: {
-    path: { type: String, required: true }
-  },
+  props: ['entryId'],
   data() {
     return {
       entry: {},
-      newRecord: true,
-      submitPath: null,
       alert: null
     };
   },
   created() {
     axios.get(this.path + '.json').then((res) => {
       this.entry = res.data.entry;
-      this.newRecord = res.data.newRecord;
-      this.submitPath = res.data.submitPath;
       this.initTags();
     });
   },
@@ -73,8 +67,8 @@ export default {
         return;
       }
       axios({
-        method: this.newRecord ? 'post' : 'patch',
-        url: this.submitPath + '.json',
+        method: this.entryId ? 'post' : 'patch',
+        url: this.path() + '.json',
         headers: {
           'X-CSRF-Token' : $('meta[name="csrf-token"]').attr('content')
         },
@@ -91,21 +85,13 @@ export default {
         window.scrollTo(0, 0);
       });
     },
-    initTags() {
-      let len = this.entry.tags.length;
-      if(len < 5) {
-        for(let i = 0; i < 5 - len; i++) {
-          this.entry.tags.push({ name: '' });
-        }
-      }
-    },
     destroy() {
       if(!confirm('本当に削除しますか?')) {
         return;
       }
       axios({
         method: 'delete',
-        url: this.submitPath + '.json',
+        url: this.path() + '.json',
         headers: {
           'X-CSRF-Token' : $('meta[name="csrf-token"]').attr('content')
         }
@@ -123,6 +109,17 @@ export default {
         return false;
       }
       return true;
+    },
+    initTags() {
+      let len = this.entry.tags.length;
+      if(len < 5) {
+        for(let i = 0; i < 5 - len; i++) {
+          this.entry.tags.push({ name: '' });
+        }
+      }
+    },
+    path() {
+      return this.entryId ? `/entries/${this.entryId}` : '/entries';
     }
   }
 }
