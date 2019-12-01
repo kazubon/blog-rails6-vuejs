@@ -61,6 +61,28 @@ export default {
     });
   },
   methods: {
+    path() {
+      return this.entryId ? `/entries/${this.entryId}/edit` : '/entries/new';
+    },
+    initTags() {
+      let len = this.entry.tags.length;
+      if(len < 5) {
+        for(let i = 0; i < 5 - len; i++) {
+          this.entry.tags.push({ name: '' });
+        }
+      }
+    },
+    validate() {
+      if(!(this.entry.body && this.entry.body.match(/[^\s]+/))) {
+        this.alert = '本文を入力してください。';
+        window.scrollTo(0, 0);
+        return false;
+      }
+      return true;
+    },
+    submitPath() {
+      return this.entryId ? `/entries/${this.entryId}` : '/entries';
+    },
     submit(evt) {
       evt.preventDefault();
       if(!this.validate()) {
@@ -101,28 +123,6 @@ export default {
         this.alert = `${error.response.status} ${error.response.statusText}`;
         window.scrollTo(0, 0);
       });
-    },
-    validate() {
-      if(!(this.entry.body && this.entry.body.match(/[^\s]+/))) {
-        this.alert = '本文を入力してください。';
-        window.scrollTo(0, 0);
-        return false;
-      }
-      return true;
-    },
-    initTags() {
-      let len = this.entry.tags.length;
-      if(len < 5) {
-        for(let i = 0; i < 5 - len; i++) {
-          this.entry.tags.push({ name: '' });
-        }
-      }
-    },
-    path() {
-      return this.entryId ? `/entries/${this.entryId}/edit` : '/entries/new';
-    },
-    submitPath() {
-      return this.entryId ? `/entries/${this.entryId}` : '/entries';
     }
   }
 }

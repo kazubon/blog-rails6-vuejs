@@ -46,7 +46,7 @@ class EntriesController < ApplicationController
       flash.notice = '記事を更新しました。'
       render json: { location: entry_path(@entry) }
     else
-      render json: { alert: '記事を更新できませんでした。', errors: @form.errors.full_messages },
+      render json: { alert: '記事を更新できませんでした。' },
         status: :unprocessable_entity
     end
   end
