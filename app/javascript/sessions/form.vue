@@ -1,11 +1,10 @@
+<script>
 import axios from 'axios';
 
 export default {
-  el: '#session-form',
   data() {
     return {
-      email: null,
-      password: null,
+      user: { email: null, password: null },
       alert: null
     }
   },
@@ -14,11 +13,11 @@ export default {
       evt.preventDefault();
       axios({
         method: 'post',
-        url: this.submitPath() + '.json',
+        url: '/session.json',
         headers: {
           'X-CSRF-Token' : $('meta[name="csrf-token"]').attr('content')
         },
-        data: { user: { email: this.email, password: this.password } }
+        data: { user: this.user }
       }).then((res) => {
         Turbolinks.visit(res.data.location);
       }).catch((error) => {
@@ -30,9 +29,7 @@ export default {
         }
         window.scrollTo(0, 0);
       });
-    },
-    submitPath() {
-      return $(this.$el).find('form').attr('action');
     }
   }
 }
+</script>

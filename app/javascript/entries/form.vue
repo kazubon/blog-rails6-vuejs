@@ -55,7 +55,7 @@ export default {
     };
   },
   created() {
-    axios.get(this.path + '.json').then((res) => {
+    axios.get(this.path() + '.json').then((res) => {
       this.entry = res.data.entry;
       this.initTags();
     });
@@ -67,8 +67,8 @@ export default {
         return;
       }
       axios({
-        method: this.entryId ? 'post' : 'patch',
-        url: this.path() + '.json',
+        method: this.entryId ? 'patch' : 'post',
+        url: this.submitPath() + '.json',
         headers: {
           'X-CSRF-Token' : $('meta[name="csrf-token"]').attr('content')
         },
@@ -91,7 +91,7 @@ export default {
       }
       axios({
         method: 'delete',
-        url: this.path() + '.json',
+        url: this.submitPath() + '.json',
         headers: {
           'X-CSRF-Token' : $('meta[name="csrf-token"]').attr('content')
         }
@@ -119,6 +119,9 @@ export default {
       }
     },
     path() {
+      return this.entryId ? `/entries/${this.entryId}/edit` : '/entries/new';
+    },
+    submitPath() {
       return this.entryId ? `/entries/${this.entryId}` : '/entries';
     }
   }
