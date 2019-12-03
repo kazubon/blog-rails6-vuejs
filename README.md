@@ -2,6 +2,8 @@
 
 Rails 6とVue.jsによるフォームのサンプルです。
 
+解説：[Rails+Vue.jsによるフォームの作例](https://qiita.com/kazutosato/items/38caffdbd21508a5c126)
+
 ## 動作環境
 
 Ruby 2.6.4、Ruby on Rails 6.0, Webpacker 4, Vue.js 2.6
