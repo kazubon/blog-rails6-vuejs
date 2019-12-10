@@ -6,7 +6,7 @@ Rails 6とVue.jsによるフォームのサンプルです。
 
 ## 動作環境
 
-Ruby 2.6.4、Ruby on Rails 6.0, Webpacker 4, Vue.js 2.6
+Ruby 2.6.5、Ruby on Rails 6.0, Webpacker 4.2, Vue.js 2.6
 
 非SPA、Turbolinksあり
 
