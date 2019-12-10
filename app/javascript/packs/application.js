@@ -1,7 +1,6 @@
 require("@rails/ujs").start();
 require("turbolinks").start();
 
-import 'core-js';
 import Vue from 'vue';
 import TurbolinksAdapter from 'vue-turbolinks'
 
@@ -11,6 +10,8 @@ import EntryStar from '../entries/star';
 import SessionForm from '../sessions/form';
 
 Vue.use(TurbolinksAdapter);
+
+Promise;
 
 document.addEventListener('turbolinks:load', () => {
   let apps = [
