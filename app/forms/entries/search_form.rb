@@ -29,7 +29,7 @@ class Entries::SearchForm
     rel = if user
       user == current_user ? user.entries : user.entries.published
     else
-      Entry.published
+      Entry.joins(:user).merge(User.active).published
     end
 
     if title.present?

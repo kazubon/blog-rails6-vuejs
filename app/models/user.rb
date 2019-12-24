@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   has_many :entries
 
-  scope :active, ->{ where.not(deleted_at: nil) }
+  scope :active, ->{ where(deleted_at: nil) }
 
   attr_accessor :password
 
