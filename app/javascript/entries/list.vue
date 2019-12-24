@@ -2,23 +2,23 @@
   <div>
     <div class="text-right mb-3">
       {{entriesCount}}件 | 
-      <a :href="sortPath('date')" v-if="query.sort == 'stars'">日付順</a>
+      <router-link :to="sortPath('date')" v-if="query.sort == 'stars'">日付順</router-link>
       <template v-else>日付順</template>
-      | <a :href="sortPath('stars')" v-if="query.sort != 'stars'">いいね順</a>
+      | <router-link :to="sortPath('stars')" v-if="query.sort != 'stars'">いいね順</router-link>
       <template v-else>いいね順</template>
     </div>
     <div class="entries mb-4">
       <div v-for="entry in entries" :key="entry.id" class="entry">
         <div>
-          <a :href="entry.path">
+          <router-link :to="{ name: 'entry', params: { entryId: entry.id }}">
             <template v-if="entry.draft">（下書き） </template>
             {{entry.title}}
-          </a>
+          </router-link>
         </div>
         <div class="text-right text-secondary">
-          <a :href="entry.user_path">{{entry.user_name}}</a> |
-          <a v-for="tag in entry.tags" :key="tag.id" class="mr-2"
-              :href="tag.tag_path">{{tag.name}}</a> |
+          <router-link :to="entry.user_path">{{entry.user_name}}</router-link> |
+          <router-link v-for="tag in entry.tags" :key="tag.id" class="mr-1 ml-1"
+              :to="tag.tag_path">{{tag.name}}</router-link> |
           {{entry.published_at}} |
           <span class="text-warning" v-if="entry.stars_count > 0">★{{entry.stars_count}}</span>
         </div>
@@ -31,42 +31,41 @@
 </template>
 
 <script>
-import axios from 'axios';
-import qs from 'qs';
+import Store from './store';
 
 export default {
-  props: ['userId', 'query'],
-  data: function () {
+  props: ['query'],
+  data() {
     return {
-      entries: [],
-      entriesCount: 0,
+      state: Store.state,
       offset: 0
     };
   },
   computed: {
+    entries() {
+      return this.state.entries;
+    },
+    entriesCount() {
+      return this.state.entriesCount;
+    },
     showMore() {
       return (this.entries.length < this.entriesCount);
     }
   },
-  created () {
-    this.getEntries();
+  watch: {
+    $route(to, from) {
+      this.offset = 0;
+    }
   },
   methods: {
-    getEntries() {
-      let params = { q: { ...this.query, offset: this.offset }, user_id: this.userId };
-      let path = '/entries.json?' + qs.stringify(params);
-      axios.get(path).then((res) => {
-        this.entries = this.entries.concat(res.data.entries);
-        this.entriesCount = res.data.entries_count;
-      });
-    },
     moreClicked() {
       this.offset += 20;
-      this.getEntries();
+      let query = { ...this.query, offset: this.offset };
+      Store.getEntries(this.$router, query);
     },
     sortPath(key) {
-      let params = { q: { ...this.query, sort: key }, user_id: this.userId };
-      return '/entries?' + qs.stringify(params);
+      let query = { ...this.query, sort: key };
+      return { name: 'entries', query };
     }
   }
 }

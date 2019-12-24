@@ -10,29 +10,35 @@ class EntriesController < ApplicationController
   def show
     @entry = Entry.find(params[:id])
     raise NotFound unless @entry.readable_by?(current_user)
+    respond_to do |format|
+      format.html { render :index }
+      format.json
+    end
   end
 
   def new
     @entry = Entry.new
     @form = Entries::Form.new(current_user, @entry)
     respond_to do |format|
-      format.html
-      format.json { render :edit }
+      format.html { render :index }
+      format.json { render :show }
     end
   end
 
   def edit
     @entry = current_user.entries.find(params[:id])
     @form = Entries::Form.new(current_user, @entry)
-    respond_to :html, :json
+    respond_to do |format|
+      format.html { render :index }
+      format.json { render :show }
+    end
   end
 
   def create
     @entry = Entry.new
     @form = Entries::Form.new(current_user, @entry, entry_params)
     if @form.save
-      flash.notice = '記事を作成しました。'
-      render json: { location: entry_path(@entry) }
+      render json: { location: entry_path(@entry), notice: '記事を作成しました。' }
     else
       render json: { alert: '記事を作成できませんでした。' },
         status: :unprocessable_entity
@@ -43,8 +49,7 @@ class EntriesController < ApplicationController
     @entry = current_user.entries.find(params[:id])
     @form = Entries::Form.new(current_user, @entry, entry_params)
     if @form.save
-      flash.notice = '記事を更新しました。'
-      render json: { location: entry_path(@entry) }
+      render json: { location: entry_path(@entry), notice: '記事を更新しました。' }
     else
       render json: { alert: '記事を更新できませんでした。' },
         status: :unprocessable_entity
@@ -54,14 +59,12 @@ class EntriesController < ApplicationController
   def destroy
     @entry = current_user.entries.find(params[:id])
     @entry.destroy
-    flash.notice = '記事を削除しました。'
-    render json: { location: user_entries_path(current_user) }
+    render json: { location: user_entries_path(current_user), notice: '記事を削除しました。' }
   end
 
   private
   def search_params
-    return {} unless params.has_key?(:q)
-    params.require(:q).permit(:title, :tag, :offset, :sort)
+    params.except(:user_id, :format).permit(:title, :tag, :offset, :sort, :user_id)
   end
 
   def entry_params

@@ -1,17 +1,1 @@
-<% if @user %>
-<div class="row">
-  <div class="col-md">
-    <h1><%= @user.name %> さんの記事</h1>
-  </div>
-  <% if @user == current_user %>
-    <div class="col-md text-right">
-      <%= link_to '新規作成', :new_entry %>
-    </div>
-  <% end %>
-</div>
-<% end %>
-
-<script>
-var vueProps = <%= { userId: @user.try(:id), query: params[:q] || {} }.to_json.html_safe %>;
-</script>
-<div id="entry-index"></div>
+<div id="entries"></div>

@@ -11,7 +11,7 @@ class Entry < ApplicationRecord
   end
 
   def editable_by?(current_user)
-    user == current_user
+    !new_record? && user == current_user
   end
 
   def starrable_by?(current_user)

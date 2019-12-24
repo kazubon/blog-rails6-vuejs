@@ -1,41 +1,42 @@
 <template>
   <div class="text-right">
     <big class="d-inline-block p-1 border rounded">
-      <a href="#" v-if="starrable" class="mr-1 ml-1 text-decoration-none"
+      <a href="#" v-if="!entry.myself" class="mr-1 ml-1 text-decoration-none"
          @click="submit" title="いいね">👍</a>
-      <span v-if="count > 0" class="text-warning mr-1 ml-1">⭐️ {{count}}</span>
+      <span v-if="entry.star_count > 0" class="text-warning mr-1 ml-1">⭐️ {{entry.star_count}}</span>
     </big>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
+import Axios from 'axios';
+import Store from './store';
 
 export default {
-  props: {
-    starCount: { type: Number, default: 0 },
-    entryId: { type: Number },
-    starrable: { type: Boolean }
-  },
   data() {
     return {
-      count: 0
+      state: Store.state
     };
   },
-  created() {
-    this.count = this.starCount;
+  computed: {
+    entry() {
+      return this.state.entry;
+    }
   },
   methods: {
     submit(evt) {
       evt.preventDefault();
-      axios({
+
+      let location = { name: 'star', params: { entryId: this.entry.id } };
+      let path = this.$router.resolve(location).href;
+      Axios({
         method: 'patch',
-        url: `/entries/${this.entryId}/star.json`,
+        url: path,
         headers: {
           'X-CSRF-Token' : $('meta[name="csrf-token"]').attr('content')
         }
       }).then((res) => {
-        this.count = res.data.count;
+        Store.state.entry.star_count = res.data.count;
       });
     }
   }
