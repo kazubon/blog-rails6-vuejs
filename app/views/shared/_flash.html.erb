@@ -1,0 +1,8 @@
+<div id="flash">
+  <% if flash.notice.present? %>
+    <div class="alert alert-primary"><%= flash.notice %></div>
+  <% end %>
+  <% if flash.alert.present? %>
+    <div class="alert alert-danger"><%= flash.alert %></div>
+  <% end %>
+</div>

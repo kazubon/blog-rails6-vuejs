@@ -24,6 +24,11 @@ class Entries::SearchForm
     relation.count
   end
 
+  def query
+    attrs = attributes.except('offset')
+    user ? attrs.merge('user_id' => user.id) : attrs
+  end
+
   private
   def relation
     rel = if user

@@ -12,6 +12,6 @@
 <% end %>
 
 <script>
-var vueProps = <%= { userId: @user.try(:id), query: params[:q] || {} }.to_json.html_safe %>;
+var vueProps = <%= { query: @form.query }.to_json.html_safe %>;
 </script>
 <div id="entry-index"></div>

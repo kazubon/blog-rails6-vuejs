@@ -15,12 +15,7 @@
   <body>
     <%= render 'shared/header' %>
     <div class="col-sm-6 mx-auto">
-      <% if flash.notice.present? %>
-        <div class="alert alert-primary"><%= flash.notice %></div>
-      <% end %>
-      <% if flash.alert.present? %>
-        <div class="alert alert-danger"><%= flash.alert %></div>
-      <% end %>
+      <%= render 'shared/flash' %>
 
       <%= yield %>
     </div>

@@ -4,6 +4,8 @@ Rails 6とVue.jsによるフォームのサンプルです。
 
 解説：[Rails+Vue.jsによるフォームの作例](https://qiita.com/kazutosato/items/38caffdbd21508a5c126)
 
+vue-routerを使ったバージョンはこちら: https://github.com/kazubon/blog-rails6-vuejs/tree/router
+
 ## 動作環境
 
 Ruby 2.6.5、Ruby on Rails 6.0, Webpacker 4.2, Vue.js 2.6

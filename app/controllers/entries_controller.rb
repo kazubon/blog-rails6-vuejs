@@ -60,8 +60,7 @@ class EntriesController < ApplicationController
 
   private
   def search_params
-    return {} unless params.has_key?(:q)
-    params.require(:q).permit(:title, :tag, :offset, :sort)
+    params.except(:user_id, :format).permit(:title, :tag, :offset, :sort)
   end
 
   def entry_params
