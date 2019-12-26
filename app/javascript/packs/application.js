@@ -8,12 +8,15 @@ import EntryIndex from '../entries/index';
 import EntryForm from '../entries/form';
 import EntryStar from '../entries/star';
 import SessionForm from '../sessions/form';
+import Flash from '../flash'
 
 Vue.use(TurbolinksAdapter);
 
 Promise;
 
 document.addEventListener('turbolinks:load', () => {
+  Flash.show();
+
   let apps = [
     { elem: '#entry-index', object: EntryIndex },
     { elem: '#entry-form', object: EntryForm },

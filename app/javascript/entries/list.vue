@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import Axios from 'axios';
 import qs from 'qs';
 
 export default {
@@ -55,7 +55,7 @@ export default {
     getEntries() {
       let params = { ...this.query, offset: this.offset };
       let path = '/entries.json?' + qs.stringify(params);
-      axios.get(path).then((res) => {
+      Axios.get(path).then((res) => {
         this.entries = this.entries.concat(res.data.entries);
         this.entriesCount = res.data.entries_count;
       });

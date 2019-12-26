@@ -31,8 +31,7 @@ class EntriesController < ApplicationController
     @entry = Entry.new
     @form = Entries::Form.new(current_user, @entry, entry_params)
     if @form.save
-      flash.notice = '記事を作成しました。'
-      render json: { location: entry_path(@entry) }
+      render json: { location: entry_path(@entry), notice: '記事を作成しました。' }
     else
       render json: { alert: '記事を作成できませんでした。' },
         status: :unprocessable_entity
@@ -43,8 +42,7 @@ class EntriesController < ApplicationController
     @entry = current_user.entries.find(params[:id])
     @form = Entries::Form.new(current_user, @entry, entry_params)
     if @form.save
-      flash.notice = '記事を更新しました。'
-      render json: { location: entry_path(@entry) }
+      render json: { location: entry_path(@entry), notice: '記事を更新しました。' }
     else
       render json: { alert: '記事を更新できませんでした。' },
         status: :unprocessable_entity
@@ -54,8 +52,7 @@ class EntriesController < ApplicationController
   def destroy
     @entry = current_user.entries.find(params[:id])
     @entry.destroy
-    flash.notice = '記事を削除しました。'
-    render json: { location: user_entries_path(current_user) }
+    render json: { location: user_entries_path(current_user), notice: '記事を削除しました。' }
   end
 
   private

@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import Axios from 'axios';
 
 export default {
   props: {
@@ -28,7 +28,7 @@ export default {
   methods: {
     submit(evt) {
       evt.preventDefault();
-      axios({
+      Axios({
         method: 'patch',
         url: `/entries/${this.entryId}/star.json`,
         headers: {

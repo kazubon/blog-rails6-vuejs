@@ -44,7 +44,8 @@
 </template>
 
 <script>
-import axios from 'axios';
+import Axios from 'axios';
+import Flash from '../flash';
 
 export default {
   props: ['entryId'],
@@ -55,7 +56,7 @@ export default {
     };
   },
   created() {
-    axios.get(this.path() + '.json').then((res) => {
+    Axios.get(this.path() + '.json').then((res) => {
       this.entry = res.data.entry;
       this.initTags();
     });
@@ -88,7 +89,7 @@ export default {
       if(!this.validate()) {
         return;
       }
-      axios({
+      Axios({
         method: this.entryId ? 'patch' : 'post',
         url: this.submitPath() + '.json',
         headers: {
@@ -96,6 +97,7 @@ export default {
         },
         data: { entry: this.entry }
       }).then((res) => {
+        Flash.set({ notice: res.data.notice });
         Turbolinks.visit(res.data.location);
       }).catch((error) => {
         if(error.response.status == 422) {
@@ -111,13 +113,14 @@ export default {
       if(!confirm('本当に削除しますか?')) {
         return;
       }
-      axios({
+      Axios({
         method: 'delete',
         url: this.submitPath() + '.json',
         headers: {
           'X-CSRF-Token' : $('meta[name="csrf-token"]').attr('content')
         }
       }).then((res) => {
+        Flash.set({ notice: res.data.notice });
         Turbolinks.visit(res.data.location);
       }).catch((error) => {
         this.alert = `${error.response.status} ${error.response.statusText}`;
