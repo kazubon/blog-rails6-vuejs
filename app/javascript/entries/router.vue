@@ -9,6 +9,7 @@ import VueRouter from 'vue-router';
 import Index from './index';
 import Show from './show';
 import Form from './form';
+import Flash from '../flash';
 
 const router = new VueRouter({
   mode: 'history',
@@ -24,7 +25,7 @@ const router = new VueRouter({
 });
 
 router.afterEach((to, from) => {
-  clearFlash();
+  Flash.show();
 });
 
 export default {

@@ -54,6 +54,7 @@
 <script>
 import Axios from 'axios';
 import Store from './store';
+import Flash from '../flash';
 
 export default {
   props: ['entryId'],
@@ -113,9 +114,8 @@ export default {
         },
         data: { entry: this.entry }
       }).then((res) => {
-        this.$router.push({ path: res.data.location }).then(() => {
-          showFlash({ notice: res.data.notice });
-        });
+        Flash.set({ notice: res.data.notice });
+        this.$router.push({ path: res.data.location });
       }).catch((error) => {
         if(error.response.status == 422) {
           this.alert = error.response.data.alert;
@@ -137,9 +137,8 @@ export default {
           'X-CSRF-Token' : $('meta[name="csrf-token"]').attr('content')
         }
       }).then((res) => {
-        this.$router.push({ path: res.data.location }).then(() => {
-          showFlash({ notice: res.data.notice });
-        });
+        Flash.set({ notice: res.data.notice });
+        this.$router.push({ path: res.data.location });
       }).catch((error) => {
         this.alert = `${error.response.status} ${error.response.statusText}`;
         window.scrollTo(0, 0);
