@@ -64,7 +64,7 @@ class EntriesController < ApplicationController
 
   private
   def search_params
-    params.except(:user_id, :format).permit(:title, :tag, :offset, :sort, :user_id)
+    params.except(:user_id, :format).permit(:title, :tag, :offset, :sort)
   end
 
   def entry_params
