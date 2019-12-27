@@ -1,6 +1,9 @@
 <template>
   <div>
-    <router-view></router-view>
+    <div v-if="error && error.response">
+      {{error.response.status}} {{error.response.statusText}}
+    </div>
+    <router-view v-else></router-view>
   </div>
 </template>
 
@@ -9,6 +12,7 @@ import VueRouter from 'vue-router';
 import Index from './index';
 import Show from './show';
 import Form from './form';
+import Store from './store';
 import Flash from '../flash';
 
 const router = new VueRouter({
@@ -25,10 +29,19 @@ const router = new VueRouter({
 });
 
 router.afterEach((to, from) => {
+  Store.state.error = null;
   Flash.show();
 });
 
 export default {
-  router: router
+  router: router,
+  data() {
+    return {
+      state: Store.state
+    };
+  },
+  computed: {
+    error() { return this.state.error; }
+  }
 };
 </script>

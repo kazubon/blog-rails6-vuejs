@@ -1,53 +1,48 @@
 <template>
   <div>
-    <template v-if="error">
-      <div v-if="error.response">{{error.response.status}} {{error.response.statusText}}</div>
-    </template>
-    <template v-else>
-      <h1 v-if="entry.id">記事の編集</h1>
-      <h1 v-else>記事の作成</h1>
+    <h1 v-if="entry.id">記事の編集</h1>
+    <h1 v-else>記事の作成</h1>
 
-      <form @submit="submit">
-        <div v-if="alert" class="alert alert-danger">{{alert}}</div>
-        <div class="form-group">
-          <label for="entry-title">タイトル</label>
-          <input type="text" v-model="entry.title" id="entry-title"
-            class="form-control" required maxlength="255" pattern=".*[^\s]+.*">
+    <form @submit="submit">
+      <div v-if="alert" class="alert alert-danger">{{alert}}</div>
+      <div class="form-group">
+        <label for="entry-title">タイトル</label>
+        <input type="text" v-model="entry.title" id="entry-title"
+          class="form-control" required maxlength="255" pattern=".*[^\s]+.*">
+      </div>
+      <div class="form-group">
+        <label for="entry-body">本文</label>
+        <textarea v-model="entry.body" id="entry-body" cols="80" rows="15"
+          class="form-control" required maxlength="40000">
+        </textarea>
+      </div>
+      <div class="form-group">
+        <label for="entry-tag0">タグ</label>
+        <div>
+          <input v-for="(tag, index) in entry.tags" :key="index" v-model="tag.name"
+            class="form-control width-auto d-inline-block mr-2" style="width: 17%"
+            maxlength="255" >
         </div>
-        <div class="form-group">
-          <label for="entry-body">本文</label>
-          <textarea v-model="entry.body" id="entry-body" cols="80" rows="15"
-            class="form-control" required maxlength="40000">
-          </textarea>
+      </div>
+      <div class="form-group">
+        <label for="entry-published_at">日時</label>
+        <input type="text" v-model="entry.published_at" id="entry-published_at"
+          class="form-control"
+          pattern="\d{4}(-|\/)\d{2}(-|\/)\d{2} +\d{2}:\d{2}">
+      </div>
+      <div class="form-group mb-4">
+        <input type="checkbox" v-model="entry.draft" id="entry-draft" value="1">
+        <label for="entry-draft">下書き</label>
+      </div>
+      <div class="row">
+        <div class="col">
+          <button type="submit" class="btn btn-outline-primary">{{entry.id ? '更新' : '作成'}}</button>
         </div>
-        <div class="form-group">
-          <label for="entry-tag0">タグ</label>
-          <div>
-            <input v-for="(tag, index) in entry.tags" :key="index" v-model="tag.name"
-              class="form-control width-auto d-inline-block mr-2" style="width: 17%"
-              maxlength="255" >
-          </div>
+        <div class="col text-right" v-if="entry.id">
+          <button type="button" class="btn btn-outline-danger" @click="destroy">削除</button>
         </div>
-        <div class="form-group">
-          <label for="entry-published_at">日時</label>
-          <input type="text" v-model="entry.published_at" id="entry-published_at"
-            class="form-control"
-            pattern="\d{4}(-|\/)\d{2}(-|\/)\d{2} +\d{2}:\d{2}">
-        </div>
-        <div class="form-group mb-4">
-          <input type="checkbox" v-model="entry.draft" id="entry-draft" value="1">
-          <label for="entry-draft">下書き</label>
-        </div>
-        <div class="row">
-          <div class="col">
-            <button type="submit" class="btn btn-outline-primary">{{entry.id ? '更新' : '作成'}}</button>
-          </div>
-          <div class="col text-right" v-if="entry.id">
-            <button type="button" class="btn btn-outline-danger" @click="destroy">削除</button>
-          </div>
-        </div>
-      </form>
-    </template>
+      </div>
+    </form>
   </div>
 </template>
 
@@ -61,8 +56,7 @@ export default {
   data() {
     return {
       state: Store.state,
-      alert: null,
-      error: null
+      alert: null
     };
   },
   computed: {
@@ -74,8 +68,6 @@ export default {
     Store.clearEntry();
     Store.getEntry(this.$router, this.entryId).then(() => {
       this.initTags();
-    }).catch((error) => {
-      this.error = error;
     });
   },
   methods: {
