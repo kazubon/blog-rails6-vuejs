@@ -10,7 +10,7 @@
         {{tag.name}}
       </router-link> |
       {{entry.published_at}} |
-      <router-link :to="{ name: 'edit_entry', params: { entryId: entry.id }}" v-if="entry.myself">編集</router-link>
+      <router-link :to="{ name: 'edit_entry', params: { entryId: entry.id }}" v-if="entry.editable">編集</router-link>
     </p>
 
     <p class="mb-5" v-html="entryBody()"></p>

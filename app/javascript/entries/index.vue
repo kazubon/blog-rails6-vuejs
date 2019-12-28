@@ -4,7 +4,7 @@
       <div class="col-md">
         <h1>{{userName}} さんの記事</h1>
       </div>
-      <div class="col-md text-right" v-if="myself">
+      <div class="col-md text-right" v-if="creatable">
         <router-link :to="{ name: 'new_entry' }">新規作成</router-link>
       </div>
     </div>
@@ -24,12 +24,12 @@ export default {
   data() {
     return {
       query: {},
-      state: Store.state
+      state: Store.state.list
     };
   },
   computed: {
     userName() { return this.state.userName; },
-    myself() { return this.state.myself; }
+    creatable() { return this.state.creatable; }
   },
   watch: {
     $route(to, from) {

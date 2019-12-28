@@ -37,7 +37,7 @@ export default {
   props: ['query'],
   data() {
     return {
-      state: Store.state,
+      state: Store.state.list,
       offset: 0
     };
   },

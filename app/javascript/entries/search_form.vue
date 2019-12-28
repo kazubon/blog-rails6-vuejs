@@ -17,9 +17,18 @@ export default {
   props: ['query'],
   data() {
     return {
-      title: this.query.title,
-      tag: this.query.tag
+      title: null,
+      tag: null
     };
+  },
+  watch: {
+    $route(to, from) {
+      this.created();
+    }
+  },
+  created() {
+    this.title = this.query.title;
+    this.tag = this.query.tag;
   },
   methods: {
     submit(evt) {

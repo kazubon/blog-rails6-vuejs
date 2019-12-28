@@ -20,4 +20,4 @@ json.entries do
 end
 json.entries_count @form.entries_count
 json.user_name @user.try(:name)
-json.myself current_user == @user
+json.creatable @user && current_user == @user

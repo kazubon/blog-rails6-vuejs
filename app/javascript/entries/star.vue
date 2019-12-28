@@ -1,7 +1,7 @@
 <template>
   <div class="text-right">
     <big class="d-inline-block p-1 border rounded">
-      <a href="#" v-if="!entry.myself" class="mr-1 ml-1 text-decoration-none"
+      <a href="#" v-if="entry.starrable" class="mr-1 ml-1 text-decoration-none"
          @click="submit" title="いいね">👍</a>
       <span v-if="entry.star_count > 0" class="text-warning mr-1 ml-1">⭐️ {{entry.star_count}}</span>
     </big>

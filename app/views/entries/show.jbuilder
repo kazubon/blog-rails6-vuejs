@@ -16,5 +16,6 @@ json.entry do
     json.user_path user_entries_path(@entry.user)
     json.star_count @entry.stars_count
   end
-  json.myself current_user == @entry.user
+  json.editable @entry.editable_by?(current_user)
+  json.starrable @entry.starrable_by?(current_user)
 end

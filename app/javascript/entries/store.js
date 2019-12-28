@@ -2,12 +2,25 @@ import Axios from 'axios';
 
 export default {
   state: {
+    list: {
+      entries: [],
+      entriesCount: 0,
+      userName: null,
+      creatable: false
+    },
     entry: {},
-    entries: [],
-    entriesCount: 0,
-    userName: null,
-    myself: false,
     error: null
+  },
+  setEntries(data) {
+    this.state.list.entries = this.state.list.entries.concat(data.entries);
+    Object.assign(this.state.list, {
+      entriesCount: data.entries_count, userName: data.user_name, creatable: data.creatable
+    });
+  },
+  clearEntries() {
+    Object.assign(this.state.list, {
+      entries: [], entriesCount: 0, userName: null, creatable: false
+    });
   },
   getEntries(router, query) {
     let location = { name: 'entries', query: { ...query, format: 'json' } };
@@ -16,22 +29,13 @@ export default {
 
     return new Promise((resolve, reject) => {
       Axios.get(path).then((res) => {
-        this.state.entries = this.state.entries.concat(res.data.entries);
-        this.state.entriesCount = res.data.entries_count;
-        this.state.userName = res.data.user_name;
-        this.state.myself = res.data.myself;
+        this.setEntries(res.data);
         resolve(res);
       }).catch((error) =>{
         this.state.error = error;
         reject(error);
       });
     });
-  },
-  clearEntries() {
-    this.state.entries = [];
-    this.state.entriesCount = 0;
-    this.state.userName = null;
-    this.state.myself = false;
   },
   getEntry(router, entryId) {
     let location = entryId ?
@@ -52,6 +56,5 @@ export default {
   },
   clearEntry() {
     this.state.entry = {};
-    this.state.myself = false;
   }
 }
