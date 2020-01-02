@@ -6,7 +6,7 @@ class Entries::SearchForm
   attribute :tag, :string
   attribute :offset, :integer
   attribute :sort, :string
-  attr_accessor :current_user, :user, :entries, :entries_count
+  attr_accessor :current_user, :user
 
   def initialize(current_user, user, params = {})
     @current_user = current_user
@@ -14,10 +14,13 @@ class Entries::SearchForm
     super(params)
   end
 
-  def search
-    @entries = relation.preload(:user, :tags).order(sort_key => :desc)
+  def entries
+    @entries ||= relation.preload(:user, :tags).order(sort_key => :desc)
       .limit(20).offset(offset)
-    @entries_count = relation.count
+  end
+
+  def entries_count
+    @entries_count ||= relation.count
   end
 
   def search_query
@@ -31,19 +34,18 @@ class Entries::SearchForm
   end
 
   def relation
-    @relation ||= begin
-      rel = if user
-        user == current_user ? user.entries : user.entries.published
-      else
-        Entry.joins(:user).merge(User.active).published
-      end
-      if title.present?
-        rel = rel.where('title LIKE ?', '%' + title + '%')
-      end
-      if tag.present?
-        rel = rel.joins(:tags).where('LOWER(tags.name) = LOWER(?)', tag)
-      end
-      rel
+    return @relation if @relation
+    rel = if user
+      user == current_user ? user.entries : user.entries.published
+    else
+      Entry.joins(:user).merge(User.active).published
     end
+    if title.present?
+      rel = rel.where('title LIKE ?', '%' + title + '%')
+    end
+    if tag.present?
+      rel = rel.joins(:tags).where('LOWER(tags.name) = LOWER(?)', tag)
+    end
+    @relation = rel
   end
 end
