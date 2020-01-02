@@ -4,6 +4,7 @@ class EntriesController < ApplicationController
   def index
     @user = User.active.find(params[:user_id]) if params[:user_id].present?
     @form = Entries::SearchForm.new(current_user, @user, search_params)
+    @form.search
     respond_to :html, :json
   end
 
