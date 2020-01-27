@@ -6,6 +6,8 @@ Rails 6とVue.jsによるフォームのサンプルです。
 
 vue-routerを使ったバージョンはこちら: https://github.com/kazubon/blog-rails6-vuejs/tree/router
 
+React版もあります: https://github.com/kazubon/blog-rails6-react
+
 ## 動作環境
 
 Ruby 2.6.5、Ruby on Rails 6.0, Webpacker 4.2, Vue.js 2.6
