@@ -1,3 +1,6 @@
+import "core-js/stable";
+import "regenerator-runtime/runtime";
+
 require("@rails/ujs").start();
 require("turbolinks").start();
 
@@ -12,8 +15,6 @@ import Flash from '../flash'
 
 Vue.use(TurbolinksAdapter);
 
-Promise;
-
 document.addEventListener('turbolinks:load', () => {
   Flash.show();
 
@@ -24,7 +25,7 @@ document.addEventListener('turbolinks:load', () => {
     { elem: '#session-form', object: SessionForm }
   ];
 
-  let props = window.vueProps || {};
+  let props = window.jsProps || {};
   apps.forEach((app) => {
     if($(app.elem).length) {
       if(app.object.render) { // テンプレートあり
