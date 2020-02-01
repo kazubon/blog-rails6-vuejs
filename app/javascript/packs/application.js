@@ -1,3 +1,6 @@
+import "core-js/stable";
+import "regenerator-runtime/runtime";
+
 require("@rails/ujs").start();
 require("turbolinks").start();
 
@@ -10,8 +13,6 @@ import SessionForm from '../sessions/form';
 
 Vue.use(VueRouter);
 Vue.use(TurbolinksAdapter);
-
-Promise;
 
 document.addEventListener('turbolinks:load', () => {
   let apps = [

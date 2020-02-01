@@ -6,21 +6,21 @@ export default {
     if(options.alert)  { this.alert = options.alert; }
   },
   show() {
-    if(this.notice) {
-      var elem = $('<div class="alert alert-primary"></div>').text(this.notice);
-      $('#flash').append(elem);
-      this.notice = null;
-    }
-    else {
+    if(this.notice === '') {
       $('#flash .alert-primary').remove();
     }
-    if(this.alert) {
+    else if(this.notice) {
+      var elem = $('<div class="alert alert-primary"></div>').text(this.notice);
+      $('#flash').append(elem);
+      this.notice = '';
+    }
+    if(this.alert === '') {
+      $('#flash .alert-danger').remove();
+    }
+    else if(this.alert) {
       var elem = $('<div class="alert alert-danger"></div>').text(this.alert);
       $('#flash').append(elem);
-      this.alert = null;
-    }
-    else {
-      $('#flash .alert-danger').remove();
+      this.alert = '';
     }
   },
   clear() {
