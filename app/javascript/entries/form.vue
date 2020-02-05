@@ -56,22 +56,19 @@ export default {
     };
   },
   created() {
-    Axios.get(this.path() + '.json').then((res) => {
+    let path = this.entryId ? `/entries/${this.entryId}/edit` : '/entries/new';
+    Axios.get(path + '.json').then((res) => {
       this.entry = res.data.entry;
-      this.initTags();
+      this.entry.tags = this.fillTags(this.entry.tags);
     });
   },
   methods: {
-    path() {
-      return this.entryId ? `/entries/${this.entryId}/edit` : '/entries/new';
-    },
-    initTags() {
-      let len = this.entry.tags.length;
-      if(len < 5) {
-        for(let i = 0; i < 5 - len; i++) {
-          this.entry.tags.push({ name: '' });
-        }
+    fillTags(srcTags) {
+      let tags = [];
+      for(let i = 0; i < 5; i++) {
+        tags.push(srcTags[i] || { name: '' })
       }
+      return tags;
     },
     validate() {
       if(!(this.entry.body && this.entry.body.match(/[^\s]+/))) {
@@ -81,17 +78,15 @@ export default {
       }
       return true;
     },
-    submitPath() {
-      return this.entryId ? `/entries/${this.entryId}` : '/entries';
-    },
     submit(evt) {
       evt.preventDefault();
       if(!this.validate()) {
         return;
       }
+      let path = this.entryId ? `/entries/${this.entryId}` : '/entries';
       Axios({
         method: this.entryId ? 'patch' : 'post',
-        url: this.submitPath() + '.json',
+        url: path + '.json',
         headers: {
           'X-CSRF-Token' : $('meta[name="csrf-token"]').attr('content')
         },
@@ -113,9 +108,10 @@ export default {
       if(!confirm('本当に削除しますか?')) {
         return;
       }
+      let path = this.entryId ? `/entries/${this.entryId}` : '/entries';
       Axios({
         method: 'delete',
-        url: this.submitPath() + '.json',
+        url: path + '.json',
         headers: {
           'X-CSRF-Token' : $('meta[name="csrf-token"]').attr('content')
         }
