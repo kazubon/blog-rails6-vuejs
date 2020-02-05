@@ -37,6 +37,13 @@ export default {
       });
     });
   },
+  fillTags(srcTags) {
+    let tags = [];
+    for(let i = 0; i < 5; i++) {
+      tags.push(srcTags[i] || { name: '' })
+    }
+    return tags;
+  },
   getEntry(router, entryId) {
     let location = entryId ?
       { name: 'entry', params: { entryId: entryId} } : { name: 'new_entry' };
@@ -47,6 +54,7 @@ export default {
     return new Promise((resolve, reject) => {
       Axios.get(path).then((res) => {
         this.state.entry = res.data.entry;
+        this.state.entry.tags = this.fillTags(this.state.entry.tags);
         resolve(res);
       }).catch((error) =>{
         this.state.error = error;

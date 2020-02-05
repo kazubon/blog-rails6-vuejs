@@ -66,19 +66,9 @@ export default {
   },
   created() {
     Store.clearEntry();
-    Store.getEntry(this.$router, this.entryId).then(() => {
-      this.initTags();
-    });
+    Store.getEntry(this.$router, this.entryId);
   },
   methods: {
-    initTags() {
-      let len = this.entry.tags.length;
-      if(len < 5) {
-        for(let i = 0; i < 5 - len; i++) {
-          this.entry.tags.push({ name: '' });
-        }
-      }
-    },
     validate() {
       if(!(this.entry.body && this.entry.body.match(/[^\s]+/))) {
         this.alert = '本文を入力してください。';
