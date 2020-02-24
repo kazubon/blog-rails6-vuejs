@@ -14,9 +14,6 @@ export default {
       axios({
         method: 'post',
         url: '/session.json',
-        headers: {
-          'X-CSRF-Token' : $('meta[name="csrf-token"]').attr('content')
-        },
         data: { user: this.user }
       }).then((res) => {
         Turbolinks.visit(res.data.location);

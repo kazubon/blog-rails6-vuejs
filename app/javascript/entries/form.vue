@@ -91,9 +91,6 @@ export default {
       Axios({
         method: this.entry.id ? 'patch' : 'post',
         url: this.submitPath(),
-        headers: {
-          'X-CSRF-Token' : $('meta[name="csrf-token"]').attr('content')
-        },
         data: { entry: this.entry }
       }).then((res) => {
         Flash.set({ notice: res.data.notice });
@@ -114,10 +111,7 @@ export default {
       }
       Axios({
         method: 'delete',
-        url: this.submitPath(),
-        headers: {
-          'X-CSRF-Token' : $('meta[name="csrf-token"]').attr('content')
-        }
+        url: this.submitPath()
       }).then((res) => {
         Flash.set({ notice: res.data.notice });
         this.$router.push({ path: res.data.location });

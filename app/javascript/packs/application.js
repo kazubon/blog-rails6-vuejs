@@ -6,10 +6,11 @@ require("turbolinks").start();
 
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import TurbolinksAdapter from 'vue-turbolinks'
+import TurbolinksAdapter from 'vue-turbolinks';
 
 import Entries from '../entries/router';
 import SessionForm from '../sessions/form';
+import '../axios_config';
 
 Vue.use(VueRouter);
 Vue.use(TurbolinksAdapter);

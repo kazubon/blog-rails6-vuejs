@@ -31,10 +31,7 @@ export default {
       let path = this.$router.resolve(location).href;
       Axios({
         method: 'patch',
-        url: path,
-        headers: {
-          'X-CSRF-Token' : $('meta[name="csrf-token"]').attr('content')
-        }
+        url: path
       }).then((res) => {
         Store.state.entry.star_count = res.data.count;
       });
