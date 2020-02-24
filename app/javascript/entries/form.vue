@@ -87,9 +87,6 @@ export default {
       Axios({
         method: this.entryId ? 'patch' : 'post',
         url: path + '.json',
-        headers: {
-          'X-CSRF-Token' : $('meta[name="csrf-token"]').attr('content')
-        },
         data: { entry: this.entry }
       }).then((res) => {
         Flash.set({ notice: res.data.notice });
@@ -111,10 +108,7 @@ export default {
       let path = this.entryId ? `/entries/${this.entryId}` : '/entries';
       Axios({
         method: 'delete',
-        url: path + '.json',
-        headers: {
-          'X-CSRF-Token' : $('meta[name="csrf-token"]').attr('content')
-        }
+        url: path + '.json'
       }).then((res) => {
         Flash.set({ notice: res.data.notice });
         Turbolinks.visit(res.data.location);

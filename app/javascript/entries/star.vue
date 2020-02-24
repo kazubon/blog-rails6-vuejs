@@ -30,10 +30,7 @@ export default {
       evt.preventDefault();
       Axios({
         method: 'patch',
-        url: `/entries/${this.entryId}/star.json`,
-        headers: {
-          'X-CSRF-Token' : $('meta[name="csrf-token"]').attr('content')
-        }
+        url: `/entries/${this.entryId}/star.json`
       }).then((res) => {
         this.count = res.data.count;
       });
