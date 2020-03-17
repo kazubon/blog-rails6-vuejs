@@ -23,14 +23,17 @@ export default {
   },
   watch: {
     $route(to, from) {
-      this.created();
+      this.initData();
     }
   },
   created() {
-    this.title = this.query.title;
-    this.tag = this.query.tag;
+    this.initData();
   },
   methods: {
+    initData() {
+      this.title = this.query.title;
+      this.tag = this.query.tag;
+    },
     submit(evt) {
       evt.preventDefault();
       let query = { ...this.query, title: this.title, tag: this.tag };

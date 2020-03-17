@@ -66,7 +66,7 @@ export default {
   },
   created() {
     Store.clearEntry();
-    Store.getEntry(this.$router, this.entryId);
+    Store.getEntry(this.$router, this.entryId, true);
   },
   methods: {
     validate() {
