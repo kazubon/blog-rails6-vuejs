@@ -1,5 +1,4 @@
-import "core-js/stable";
-import "regenerator-runtime/runtime";
+import "core-js/stable/promise";
 
 require("@rails/ujs").start();
 require("turbolinks").start();
