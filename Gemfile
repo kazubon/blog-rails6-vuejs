@@ -31,7 +31,6 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'rails-i18n'
 
 # assetsでjQueryとBootstrapを使う
-gem 'sassc', '~> 2.0.0'
 gem 'uglifier'
 gem 'jquery-rails'
 gem 'bootstrap'

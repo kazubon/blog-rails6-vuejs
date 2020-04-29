@@ -17,6 +17,7 @@
         <label for="entry-tag0">タグ</label>
         <div>
           <input v-for="(tag, index) in entry.tags" :key="index" v-model="tag.name"
+            :id="`entry-tag${index}`"
             class="form-control width-auto d-inline-block mr-2" style="width: 17%"
             maxlength="255" >
         </div>
