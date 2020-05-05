@@ -1,0 +1,36 @@
+version: 2.1
+orbs:
+  ruby: circleci/ruby@0.1.2 
+
+jobs:
+  build:
+    docker:
+      - image: circleci/ruby:2.6.6-stretch-node
+        environment:
+          RAILS_ENV: test
+          PGHOST: 127.0.0.1
+          PGUSER: circleci
+          TZ: "/usr/share/zoneinfo/Asia/Tokyo"
+      - image: circleci/postgres:11.7
+        environment:
+          POSTGRES_USER: circleci
+          POSTGRES_DB: blog_test
+          POSTGRES_HOST_AUTH_METHOD: trust # パスワードなし
+          TZ: "/usr/share/zoneinfo/Asia/Tokyo"
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - blog-bundle-v1-{{ checksum "Gemfile.lock" }}-{{ checksum "yarn.lock" }}
+            - blog-bundle-v1-
+      - run:
+          name: Bundler and Yarn
+          command: |
+            bundle -v
+            bundle install --jobs=3 --retry=3 --path vendor/bundle
+            yarn install
+      - save_cache:
+          paths:
+            - ./vendor/bundle
+            - ./node_modules
+          key: blog-bundle-v1-{{ checksum "Gemfile.lock" }}-{{ checksum "yarn.lock" }}
