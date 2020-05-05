@@ -6,6 +6,7 @@ RSpec.describe '記事', type: :system do
   let(:user) { create(:user, name: 'Alice', email: 'alice@example.com') }
 
   before do
+    create(:entry, title: '他の人の記事')
     login(user)
   end
 
@@ -17,5 +18,12 @@ RSpec.describe '記事', type: :system do
     fill_in 'entry-tag1', with: 'ふがふが'
     click_button '作成'
     expect(page).to have_text('記事を作成しました。')
+  end
+
+  it 'スターを付ける' do
+    visit '/'
+    click_link '他の人の記事'
+    click_link '👍'
+    expect(page).to have_text('⭐️ 1')
   end
 end
