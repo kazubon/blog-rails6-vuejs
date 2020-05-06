@@ -5,7 +5,7 @@ orbs:
 jobs:
   build:
     docker:
-      - image: circleci/ruby:2.6.6-stretch-node
+      - image: circleci/ruby:2.6.6-stretch-node-browsers
         environment:
           RAILS_ENV: test
           PGHOST: 127.0.0.1
@@ -14,7 +14,7 @@ jobs:
       - image: circleci/postgres:11.7
         environment:
           POSTGRES_USER: circleci
-          POSTGRES_DB: blog_test
+          POSTGRES_DB: blog_rails6_test
           POSTGRES_HOST_AUTH_METHOD: trust # パスワードなし
           TZ: "/usr/share/zoneinfo/Asia/Tokyo"
     steps:
@@ -34,3 +34,12 @@ jobs:
             - ./vendor/bundle
             - ./node_modules
           key: blog-bundle-v1-{{ checksum "Gemfile.lock" }}-{{ checksum "yarn.lock" }}
+      - run:
+          name: DB Initializing
+          command: |
+            dockerize -wait tcp://localhost:5432 -timeout 1m
+            bundle exec rake db:schema:load
+      - run:
+          name: rspec
+          command: |
+            bundle exec rspec --format documentation
