@@ -1,13 +1,26 @@
+require 'simplecov'
+SimpleCov.start('rails') { add_filter '/test/' }
+
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
 require 'rails/test_help'
 
+Dir[File.dirname(__FILE__) + '/support/**/*.rb'].each { |f| require f }
+
+Capybara.server = :puma, { Silent: true }
+
 class ActiveSupport::TestCase
-  # Run tests in parallel with specified workers
+  include FactoryBot::Syntax::Methods
+
   parallelize(workers: :number_of_processors)
 
-  # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
-  fixtures :all
+  parallelize_setup do |worker|
+    SimpleCov.command_name "#{SimpleCov.command_name}-#{worker}"
+  end
 
-  # Add more helper methods to be used by all tests here...
+  parallelize_teardown do |worker|
+    SimpleCov.result
+  end
+
+  # fixtures :all
 end
