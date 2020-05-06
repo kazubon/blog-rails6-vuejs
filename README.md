@@ -1,5 +1,7 @@
 # Blog
 
+[![blog-rails6-vuejs](https://circleci.com/gh/kazubon/blog-rails6-vuejs.svg?style=shield)](https://app.circleci.com/pipelines/github/kazubon/blog-rails6-vuejs)
+
 Rails 6とVue.jsによるフォームのサンプルです。
 
 解説：[Rails+Vue.jsによるフォームの作例](https://qiita.com/kazutosato/items/38caffdbd21508a5c126)
