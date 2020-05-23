@@ -43,4 +43,8 @@ jobs:
       - run:
           name: rspec
           command: |
-            bundle exec rspec --format documentation
+            bundle exec rspec --format RspecJunitFormatter \
+                              --out test_results/rspec.xml \
+                              --format documentation
+      - store_test_results:
+          path: test_results
