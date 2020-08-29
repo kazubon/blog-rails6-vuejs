@@ -12,8 +12,11 @@
 
 ActiveRecord::Schema.define(version: 2019_11_16_013349) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "entries", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.string "title"
     t.text "body"
     t.boolean "draft", default: false, null: false
@@ -25,8 +28,8 @@ ActiveRecord::Schema.define(version: 2019_11_16_013349) do
   end
 
   create_table "stars", force: :cascade do |t|
-    t.integer "entry_id", null: false
-    t.integer "user_id", null: false
+    t.bigint "entry_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["entry_id"], name: "index_stars_on_entry_id"
@@ -34,8 +37,8 @@ ActiveRecord::Schema.define(version: 2019_11_16_013349) do
   end
 
   create_table "taggings", force: :cascade do |t|
-    t.integer "tag_id", null: false
-    t.integer "entry_id", null: false
+    t.bigint "tag_id", null: false
+    t.bigint "entry_id", null: false
     t.index ["entry_id"], name: "index_taggings_on_entry_id"
     t.index ["tag_id"], name: "index_taggings_on_tag_id"
   end
