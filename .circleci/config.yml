@@ -18,6 +18,8 @@ jobs:
           bundler-version: 2.1.4
       - node/install-packages: 
           pkg-manager: yarn
+      - browser-tools/install-chrome
+      - browser-tools/install-chromedriver
 
   test:
     docker:
@@ -42,8 +44,6 @@ jobs:
           bundler-version: 2.1.4
       - node/install-packages: 
           pkg-manager: yarn
-      - browser-tools/install-chrome
-      - browser-tools/install-chromedriver
       - run:
           name: DB Initializing
           command: |
