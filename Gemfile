@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.6.6'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0.2'
+gem 'rails', '6.0.4.1'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use sqlite3 as the database for Active Record
@@ -33,7 +33,7 @@ gem 'rails-i18n'
 # assetsでjQueryとBootstrapを使う
 gem 'uglifier'
 gem 'jquery-rails'
-gem 'bootstrap'
+gem 'bootstrap', '4.3.1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

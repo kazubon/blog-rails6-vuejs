@@ -2,18 +2,18 @@
   "name": "blog",
   "private": true,
   "dependencies": {
-    "@rails/ujs": "^6.0.2",
-    "@rails/webpacker": "^4.2.2",
-    "axios": "^0.19.2",
-    "qs": "^6.9.0",
+    "@rails/ujs": "^6.0.4",
+    "@rails/webpacker": "^4.3.0",
+    "axios": "^0.21.4",
+    "qs": "^6.10.1",
     "turbolinks": "^5.2.0",
-    "vue": "^2.6.11",
-    "vue-loader": "^15.9.0",
-    "vue-template-compiler": "^2.6.11",
-    "vue-turbolinks": "^2.1.0"
+    "vue": "^2.6.14",
+    "vue-loader": "^15.9.8",
+    "vue-template-compiler": "^2.6.14",
+    "vue-turbolinks": "^2.2.2"
   },
   "version": "0.1.0",
   "devDependencies": {
-    "webpack-dev-server": "^3.10.3"
+    "webpack-dev-server": "^3.11.2"
   }
 }
