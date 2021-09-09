@@ -29,6 +29,12 @@ RSpec.describe '記事', type: :system do
     expect(page).to have_text('記事を更新しました。')
   end
 
+  it '記事の削除' do
+    click_link '自分の記事'
+    click_button '削除'
+    expect(page).to have_text('記事を削除しました。')
+  end
+
   it 'スターを付ける' do
     visit '/'
     click_link '他の人の記事'
