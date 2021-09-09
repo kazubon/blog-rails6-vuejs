@@ -31,7 +31,10 @@ RSpec.describe '記事', type: :system do
 
   it '記事の削除' do
     click_link '自分の記事'
-    click_button '削除'
+    click_link '編集'
+    accept_confirm do
+      click_button '削除'
+    end
     expect(page).to have_text('記事を削除しました。')
   end
 
