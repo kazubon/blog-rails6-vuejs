@@ -1,0 +1,19 @@
+{
+  "environments": {
+    "test": {
+      "addons":[
+         "heroku-redis",
+         "heroku-postgresql"
+      ],
+      "buildpacks": [
+        { "url": "heroku/ruby" },
+        { "url": "heroku/nodejs" },
+        { "url": "heroku/google-chrome" },
+        { "url": "heroku/chromedriver" }
+      ],
+      "env": {
+        "WD_CHROME_PATH": "/app/.apt/opt/google/chrome/chrome"
+      }
+    }
+  }
+}
