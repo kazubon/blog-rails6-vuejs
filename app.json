@@ -1,0 +1,27 @@
+{
+  "environments": {
+    "test": {
+      "scripts": {
+        "test": "bundle exec rake knapsack:rspec"
+      },
+      "formation": {
+        "test": {
+          "quantity": 4
+        }
+      },
+      "addons":[
+         "heroku-redis:in-dyno",
+         "heroku-postgresql:in-dyno"
+      ],
+      "buildpacks": [
+        { "url": "heroku/ruby" },
+        { "url": "heroku/nodejs" },
+        { "url": "heroku/google-chrome" },
+        { "url": "heroku/chromedriver" }
+      ],
+      "env": {
+        "WD_CHROME_PATH": "/app/.apt/opt/google/chrome/chrome"
+      }
+    }
+  }
+}
