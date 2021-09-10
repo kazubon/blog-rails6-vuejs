@@ -2,11 +2,16 @@
   "environments": {
     "test": {
       "scripts": {
-        "test": "bundle exec rspec"
+        "test": "bundle exec rake knapsack:rspec"
+      },
+      "formation": {
+        "test": {
+          "quantity": 4
+        }
       },
       "addons":[
-         "heroku-redis",
-         "heroku-postgresql"
+         "heroku-redis:in-dyno",
+         "heroku-postgresql:in-dyno"
       ],
       "buildpacks": [
         { "url": "heroku/ruby" },
